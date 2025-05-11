@@ -1,2 +1,31 @@
 <app-top-navbar></app-top-navbar>
-<p>laudos works!</p>
+<h3 class="mt-3">Laudos</h3>
+<form class="form-inline mt-3 mb-3">
+    <div class="row">
+        <div class="col">
+            <input class="form-control mr-sm-2" type="search" placeholder="Nome do paciente" aria-label="Nome do paciente">
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+<div class="m-5">
+    <p class="mt-3">Laudos de {{ nomePaciente }}</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col" *ngFor="let column of tableColumns">{{ column }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let laudo of laudosPaciente">
+                <th scope="row">{{ laudo.data }} <span class="badge badge-pill badge-dark" *ngIf="(laudosPaciente.indexOf(laudo) + 1) == laudosPaciente.length">Novo</span></th>
+                <td>{{ laudo.descricao }}</td>
+                <td>{{ laudo.cid }}</td>
+                <td><button type="button" class="btn btn-primary">Visualizar</button></td>
+                <td><button type="button" class="btn btn-primary">Download</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
