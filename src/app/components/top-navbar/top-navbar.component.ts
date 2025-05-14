@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-navbar',
   standalone: true,
-  imports: [NgFor],
+  imports: [],
   templateUrl: './top-navbar.component.html',
   styleUrls: ['./top-navbar.component.css']
 })

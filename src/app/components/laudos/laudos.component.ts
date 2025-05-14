@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
-import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-laudos',
-  imports: [TopNavbarComponent, NgFor, NgIf],
+  imports: [TopNavbarComponent],
   templateUrl: './laudos.component.html',
   styleUrl: './laudos.component.css'
 })
 export class LaudosComponent {
 
+  user = {
+    name: 'Fulano da Silva',
+    context: 'paciente'
+  }
   nomePaciente = 'Fulano da Silva';
 
   tableColumns = ['Data', 'Descrição', 'CID', '', ''];
