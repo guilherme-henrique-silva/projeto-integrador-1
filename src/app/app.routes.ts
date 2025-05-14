@@ -7,11 +7,13 @@ import { ConfiguracoesComponent } from './components/configuracoes/configuracoes
 import { ConsultasComponent } from './components/consultas/consultas.component';
 import { LaudosComponent } from './components/laudos/laudos.component';
 import { ProgressoComponent } from './components/progresso/progresso.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { SigninComponent } from './components/signin/signin.component';
 
 export const routes: Routes = [
     {
         path: "",
-        component: HomeComponent
+        component: WelcomeComponent
     },
     {
         path: "home",
@@ -24,6 +26,10 @@ export const routes: Routes = [
     {
         path: "login",
         component: LoginComponent
+    },
+    {
+        path: "signin",
+        component: SigninComponent
     },
     {
         path: "perfil",
