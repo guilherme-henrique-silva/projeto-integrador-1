@@ -16,8 +16,7 @@ export class TopNavbarComponent {
     { label: 'Laudos', route: '/laudos' }
   ];
   dropdownItems = [
-    { label: 'Perfil', route: '/perfil' },
-    { label: 'Configurações', route: '/configuracoes' }
+    { label: 'Perfil', route: '/perfil' }
   ];
 
   constructor(private router: Router) {}
