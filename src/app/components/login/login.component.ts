@@ -28,7 +28,7 @@ export class LoginComponent implements AfterViewInit {
 
     addEventListener("submit", (event) => {
       alert('Olá! Vamos buscar na nossa base esse usuário e senha...');
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     })
   }
 

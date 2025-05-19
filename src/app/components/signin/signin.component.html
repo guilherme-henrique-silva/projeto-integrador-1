@@ -1,1 +1,53 @@
-<p>signin works!</p>
+<form class="row g-3 needs-validation" novalidate>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail">Email</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" required>
+      <div class="invalid-feedback">Email inválido</div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword">Senha</label>
+      <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="inputPassword" placeholder="Senha" aria-describedby="passwordHelpBlock" required>
+      <div class="invalid-feedback">Senha inválida</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputAddress">Endereço</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="123 Main St" required>
+    <div class="invalid-feedback">Endereço inválido</div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="inputCity">Cidade</label>
+        <input type="text" class="form-control" id="inputCity" required>
+        <div class="invalid-feedback">Cidade inválida</div>
+    </div>
+    <div class="form-group col-md-">
+        <label for="inputState">Estado</label>
+        <select id="inputState" class="form-control" required>
+            <option selected>Escolher...</option>
+            @for(estado of estadosItems; track estado) {
+                <option>{{ estado }}</option>
+            }
+        </select>
+        <div class="invalid-feedback">Estado inválido</div>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="inputZip">CEP</label>
+        <input type="text" pattern="[0-9]{8}" class="form-control" id="inputZip" required>
+        <div class="invalid-feedback">CEP inválido</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck" required>
+      <label class="form-check-label" for="gridCheck">
+        Eu li e concordo com os termos de uso
+      </label>
+      <div class="invalid-feedback">
+        Você deve concordar antes de prosseguir.
+      </div>
+    </div>
+  </div>
+  <button type="submit" id="btnSignin" class="btn btn-primary">Cadastrar</button>
+</form>
