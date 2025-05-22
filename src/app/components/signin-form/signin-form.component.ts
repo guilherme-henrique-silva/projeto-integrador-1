@@ -20,7 +20,7 @@ export class SigninFormComponent implements AfterViewInit{
   ngAfterViewInit(): void {
     // Aplicar validação customizada do Bootstrap
     const forms = document.querySelectorAll<HTMLFormElement>('.needs-validation');
-    const btnLogin = document.querySelector<HTMLFormElement>('#btnSignin');
+    const btnSignin = document.querySelector<HTMLFormElement>('#btnSignin');
 
     forms.forEach((form) => {
       form.addEventListener('submit', (event) => {
