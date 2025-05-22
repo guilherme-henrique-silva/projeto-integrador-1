@@ -1,0 +1,53 @@
+<form class="row g-3 needs-validation mt-4 mb-4" novalidate>
+    <div class="form-row row">
+      <div class="col-md-4 col">
+        <label for="emailInput">Email</label>
+        <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" required>
+        <div class="invalid-feedback">Email inválido</div>
+      </div>
+    </div>
+    <div class="form-row row">
+      <div class="col-md-4 col">
+        <label for="passwordInput">Senha</label>
+        <input type="password" class="form-control" id="passwordInput" placeholder="Password" aria-describedby="passwordHelpBlock" required>
+        <div class="invalid-feedback">Senha inválida</div>
+        <div id="passwordHelpBlock" class="form-text">
+            A senha deve conter 8-20 caracteres, letras e números, não conter espaços, caracteres especiais ou emoji.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col mt-4">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioPaciente" value="paciente" (change)="onChange()" checked required>
+        <label class="form-check-label" for="inlineRadioPaciente">Paciente</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioPsicologo" value="psicologo" (change)="onChange()" required>
+        <label class="form-check-label" for="inlineRadioPsicologo">Psicólogo</label>
+      </div>
+      @if(isCheckedPsicologo) {
+        <div class="col-md-4 col">
+          <label for="inputCRP">CRP</label>
+          <input type="text" pattern="[0-9]{7}" class="form-control" id="inputCRP" required>
+          <div class="invalid-feedback">CRP inválido</div>
+        </div>
+      }
+      <div class="invalid-feedback">
+        Você deve selecionar paciente/psicólogo.
+      </div>
+    </div>
+    <div class="col-12">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+          <label class="form-check-label" for="invalidCheck">
+            Eu li e concordo com os termos de uso
+          </label>
+          <div class="invalid-feedback">
+            Você deve concordar antes de prosseguir.
+          </div>
+        </div>
+      </div>
+    <div class="col-12">
+        <button class="btn btn-primary" id="btnLogin" type="submit">Login</button>
+    </div>
+</form>

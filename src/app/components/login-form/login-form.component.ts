@@ -1,29 +1,22 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-signin-form',
+  selector: 'app-login-form',
   imports: [],
-  templateUrl: './signin-form.component.html',
-  styleUrl: './signin-form.component.css'
+  templateUrl: './login-form.component.html',
+  styleUrl: './login-form.component.css'
 })
-export class SigninFormComponent implements AfterViewInit{
+export class LoginFormComponent implements AfterViewInit {
 
   isCheckedPsicologo: boolean = false;
 
   constructor(private router: Router) {}
 
-    estadosItems = [
-      'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
-      'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PB', 'PI', 'RJ', 'RN',
-      'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
-    ]
-
   ngAfterViewInit(): void {
     // Aplicar validação customizada do Bootstrap
     const forms = document.querySelectorAll<HTMLFormElement>('.needs-validation');
-    const btnSignin = document.querySelector<HTMLFormElement>('#btnSignin');
+    const btnLogin = document.querySelector<HTMLFormElement>('#btnLogin');
 
     forms.forEach((form) => {
       form.addEventListener('submit', (event) => {
@@ -43,7 +36,6 @@ export class SigninFormComponent implements AfterViewInit{
 
   onChange() {
     this.isCheckedPsicologo = !this.isCheckedPsicologo;
-    console.log('é psicologo: ' + this.isCheckedPsicologo);
   }
 
 }

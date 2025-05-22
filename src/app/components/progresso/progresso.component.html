@@ -1,12 +1,87 @@
 <app-top-navbar></app-top-navbar>
-<p>progresso works!</p>
-<google-chart
-  [title]="chart.title"
-  [type]="chart.type"
-  [data]="chart.data"
-  [columns]="chart.columnNames"
-  [options]="chart.options"
-  [width]="chart.width"
-  [height]="chart.height"
-></google-chart>
 
+<div class="row m-3">
+
+  <div class="col card border-primary m-3 p-0">
+    <div class="card-header text-white bg-primary">Progresso das avaliações de saúde mental</div>
+    <div class="card-body">
+      <google-chart
+        [title]="chart.title"
+        [type]="chart.type"
+        [data]="chart.data"
+        [columns]="chart.columnNames"
+        [options]="chart.options"
+        [width]="chart.width"
+        [height]="chart.height"
+      ></google-chart>
+      @if(getSeverity() >= 8) {
+        <div class="alert alert-danger mt-5" role="alert">
+          O nível dos sintomas apresentados é grave!
+        </div>
+      } @else if(getSeverity() >= 5 && getSeverity() < 8) {
+        <div class="alert alert-warning mt-5" role="alert">
+          O nível dos sintomas apresentados é moderado!
+        </div>
+      } @else {
+        <div class="alert alert-success mt-5" role="alert">
+          O nível dos sintomas apresentados é leve!
+        </div>
+      }
+    </div>
+  </div>
+  
+  <div class="col card border-primary m-3 p-0">
+    <div class="card-header text-white bg-primary">Atividades recomendadas</div>
+    <div class="card-body text-primary">
+      @if(getSeverity() >= 8) {
+        <h5 class="card-title">
+          🔴 Cuidados em nível grave
+        </h5>
+        <p class="card-text">
+          <i>Quando há sofrimento intenso, como pensamentos suicidas, crises de pânico recorrentes, isolamento extremo, ideação autolesiva, depressão profunda ou psicose.</i><br><br>
+          ⚠️ Avaliação imediata com psicólogo e/ou psiquiatra<br>
+          ⚠️ Tratamento medicamentoso, se indicado por psiquiatra<br>
+          ✅ Plano de segurança pessoal (estratégias para momentos de crise)<br>
+          ✅ Rede de apoio ativa (familiares, amigos confiáveis)<br>
+          ✅ Terapia intensiva ou acompanhamento frequente<br>
+          ✅ Internação hospitalar, se houver risco à vida<br>
+          ✅ Atividades supervisionadas que tragam sensação de controle e segurança<br>
+          ✅ Evitar decisões importantes durante crise<br>
+        </p>
+      } @else if(getSeverity() >= 5 && getSeverity() < 8) {
+        <h5 class="card-title">
+          🟡 Cuidados em nível moderado
+        </h5>
+        <p class="card-text">
+          <i>Quando os sintomas começam a afetar a rotina: dificuldade de concentração, apatia, ansiedade frequente, insônia, irritabilidade constante.</i><br><br>
+          ✅ Terapia psicológica regular (psicoterapia com profissional habilitado)<br>
+          ✅ Rotina estruturada com metas pequenas<br>
+          ✅ Atividade física com regularidade (3x/semana ou mais)<br>
+          ✅ Redução ativa de gatilhos estressores (pessoas tóxicas, sobrecarga de trabalho)<br>
+          ✅ Técnicas de respiração e grounding<br>
+          ✅ Grupos de apoio emocional<br>
+          ✅ Redução de cafeína, álcool ou estimulantes<br>
+          ✅ Expressão emocional criativa (escrever, desenhar, teatro)<br>
+        </p>
+      } @else {
+        <h5 class="card-title">
+          🟢 Cuidados em nível leve
+        </h5>
+        <p class="card-text">
+          <i>Quando há estresse, leve ansiedade, cansaço emocional ou oscilações de humor esporádicas.</i><br>
+          Atividades recomendadas:<br>
+          ✅ Exercício físico leve a moderado (caminhada, yoga, dança)<br>
+          ✅ Sono regular (de 7 a 9 horas por noite)<br>
+          ✅ Meditação ou mindfulness (5–10 minutos por dia)<br>
+          ✅ Diário de gratidão ou registro emocional<br>
+          ✅ Limitar consumo de redes sociais<br>
+          ✅ Contato com natureza (parques, plantas, luz solar)<br>
+          ✅ Tempo com pessoas queridas<br>
+          ✅ Leitura ou hobbies criativos (pintar, tocar instrumento, cozinhar)
+        </p>
+      }
+
+    </div>
+  </div>
+
+</div>

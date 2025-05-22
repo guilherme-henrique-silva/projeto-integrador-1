@@ -12,13 +12,20 @@
     </div>
     <div class="col-md-4 col mt-4">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="paciente" required>
-        <label class="form-check-label" for="inlineRadio1">Paciente</label>
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioPaciente" value="paciente" (change)="onChange()" checked required>
+        <label class="form-check-label" for="inlineRadioPaciente">Paciente</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="psicologo" required>
-        <label class="form-check-label" for="inlineRadio2">Psicólogo</label>
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioPsicologo" value="psicologo" (change)="onChange()" required>
+        <label class="form-check-label" for="inlineRadioPsicologo">Psicólogo</label>
       </div>
+      @if(isCheckedPsicologo) {
+        <div class="col-md-4 col">
+          <label for="inputCRP">CRP</label>
+          <input type="text" pattern="[0-9]{7}" class="form-control" id="inputCRP" required>
+          <div class="invalid-feedback">CRP inválido</div>
+        </div>
+      }
       <div class="invalid-feedback">
         Você deve selecionar paciente/psicólogo.
       </div>

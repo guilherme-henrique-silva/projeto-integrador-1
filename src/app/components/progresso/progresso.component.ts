@@ -27,4 +27,9 @@ export class ProgressoComponent {
     height: 200
   };
 
+  getSeverity(): number {
+    const severity = this.chart.data.at(-1)?.[1];
+    return typeof severity === 'number' ? severity : 0;
+  }
+
 }
