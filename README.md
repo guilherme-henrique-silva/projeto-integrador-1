@@ -101,4 +101,15 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para ma
 
 ## 👤 Autor
 
-Desenvolvido por Guilherme Henrique da Silva para a disciplina de Projeto Integrador I do Eixo de Computação da UNIVESP (1/2025).
+Desenvolvido por Guilherme Henrique da Silva e Larissa Stecca da Silva para a disciplina de Projeto Integrador I do Eixo de Computação da UNIVESP - Polo Assis (1/2025).
+
+Membros do grupo:
+
+- CARLOS HENRIQUE BATISTA DARIO
+- FERNANDA KILL DA SILVA
+- GABRIELA HERNANDES DE TOLEDO IUDESNEIDER
+- GUILHERME HENRIQUE DA SILVA
+- LARISSA STECCA DA SILVA 
+- PEDRO HENRIQUE DE OLIVEIRA E OLIVEIRA LIMA
+- RAFAEL PRAXEDES ZORZO
+- VITOR HUGO SOUZA SILVA

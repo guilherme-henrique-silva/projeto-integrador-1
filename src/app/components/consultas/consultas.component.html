@@ -1,2 +1,78 @@
 <app-top-navbar></app-top-navbar>
-<p>consultas works!</p>
+
+<div class="m-3" id="liveAlertPlaceholder"></div>
+<!-- <div class="alert alert-success m-3" role="alert">
+  Consulta excluída com sucesso!
+</div> -->
+
+<div class="container m-3 p-0">
+    @if(role == 'psicologo') {
+        <div class="row justify-content-between">
+            <div class="col-auto"><h5>Suas consultas</h5></div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"  (click)="editConsulta()">Nova consulta</button>
+            </div>
+        </div>
+    } @else {
+        <div class="row justify-content-start">
+            <div class="col-auto"><h5>Suas consultas</h5></div>
+        </div>
+    }
+</div>
+@if(consultasHasData()) {
+    <div class="row m-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    @for(column of tableColumns; track column) {
+                        <th scope="col">{{ column }}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for(consulta of consultas; track consulta.data) {
+                    <tr>
+                        <td>{{ consulta.data }}</td>
+                        <td>{{ consulta.status }}</td>
+                        <td>{{ consulta.observacoes }}</td>
+                        @if(role == 'psicologo') {
+                            <td>{{ consulta.paciente }}</td>
+                            <td><button type="button" class="btn btn-primary" (click)="editConsulta(consulta.id)">Editar</button></td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Excluir
+                                </button>
+                            </td>
+                        } @else {
+                            <td>{{ consulta.psicologo }}</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+} @else {
+    <div class="alert alert-info m-3" role="alert">
+        Não foram encontradas consultas no seu registro.
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Excluir consulta</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Deseja realmente excluir esta consulta?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="showAlert()">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>

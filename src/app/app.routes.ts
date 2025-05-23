@@ -8,6 +8,8 @@ import { LaudosComponent } from './components/laudos/laudos.component';
 import { ProgressoComponent } from './components/progresso/progresso.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SigninComponent } from './components/signin/signin.component';
+import { ConsultaComponent } from './components/consulta/consulta.component';
+import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
 
 export const routes: Routes = [
     {
@@ -39,12 +41,24 @@ export const routes: Routes = [
         component: ConsultasComponent
     },
     {
+        path: "create/consulta",
+        component: ConsultaComponent
+    },
+    {
+        path: "edit/consulta/:id",
+        component: ConsultaComponent
+    },
+    {
         path: "laudos",
         component: LaudosComponent
     },
     {
         path: "progresso",
         component: ProgressoComponent
+    },
+    {
+        path: "not-authorized",
+        component: NotAuthorizedComponent
     },
     {
         path: "**",
