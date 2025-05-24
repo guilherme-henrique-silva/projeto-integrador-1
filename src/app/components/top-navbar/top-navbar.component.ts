@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-top-navbar',
@@ -19,15 +20,13 @@ export class TopNavbarComponent {
     { label: 'Perfil', route: '/perfil' }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {}
   
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
 
   logout() {
-    // Aqui você pode adicionar lógica de logout, como limpar tokens, etc.
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    this.auth.logout();
   }
 }

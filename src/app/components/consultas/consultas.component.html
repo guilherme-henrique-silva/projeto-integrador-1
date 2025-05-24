@@ -6,7 +6,7 @@
 </div> -->
 
 <div class="container m-3 p-0">
-    @if(role == 'psicologo') {
+    @if(userRole == 'psicologo') {
         <div class="row justify-content-between">
             <div class="col-auto"><h5>Suas consultas</h5></div>
             <div class="col-auto">
@@ -35,7 +35,7 @@
                         <td>{{ consulta.data }}</td>
                         <td>{{ consulta.status }}</td>
                         <td>{{ consulta.observacoes }}</td>
-                        @if(role == 'psicologo') {
+                        @if(userRole == 'psicologo') {
                             <td>{{ consulta.paciente }}</td>
                             <td><button type="button" class="btn btn-primary" (click)="editConsulta(consulta.id)">Editar</button></td>
                             <td>

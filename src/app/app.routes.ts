@@ -9,7 +9,7 @@ import { ProgressoComponent } from './components/progresso/progresso.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { ConsultaComponent } from './components/consulta/consulta.component';
-import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
     {
@@ -18,7 +18,8 @@ export const routes: Routes = [
     },
     {
         path: "home",
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "404",
@@ -34,31 +35,33 @@ export const routes: Routes = [
     },
     {
         path: "perfil",
-        component: PerfilComponent
+        component: PerfilComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "consultas",
-        component: ConsultasComponent
+        component: ConsultasComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "create/consulta",
-        component: ConsultaComponent
+        component: ConsultaComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "edit/consulta/:id",
-        component: ConsultaComponent
+        component: ConsultaComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "laudos",
-        component: LaudosComponent
+        component: LaudosComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "progresso",
-        component: ProgressoComponent
-    },
-    {
-        path: "not-authorized",
-        component: NotAuthorizedComponent
+        component: ProgressoComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "**",

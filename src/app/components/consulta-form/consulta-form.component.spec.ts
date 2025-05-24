@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotAuthorizedComponent } from './not-authorized.component';
+import { ConsultaFormComponent } from './consulta-form.component';
 
-describe('NotAuthorizedComponent', () => {
-  let component: NotAuthorizedComponent;
-  let fixture: ComponentFixture<NotAuthorizedComponent>;
+describe('ConsultaFormComponent', () => {
+  let component: ConsultaFormComponent;
+  let fixture: ComponentFixture<ConsultaFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotAuthorizedComponent]
+      imports: [ConsultaFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NotAuthorizedComponent);
+    fixture = TestBed.createComponent(ConsultaFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

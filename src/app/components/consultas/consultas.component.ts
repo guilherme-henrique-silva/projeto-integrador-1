@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
 import { Router } from '@angular/router';
 import { Consulta, ConsultaService } from '../../services/consulta.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-consultas',
@@ -11,38 +12,43 @@ import { Consulta, ConsultaService } from '../../services/consulta.service';
 })
 export class ConsultasComponent implements OnInit {
 
-  constructor(private router: Router, private consultaService: ConsultaService) {}
+  userId: string | null;
+  userRole: string | null;
+
+  tableColumns = ['Data', 'Status', 'Observações', this.setTableRole().replace('p', 'P')];
+
+  constructor(private auth: AuthService, private router: Router, private consultaService: ConsultaService) {
+    this.userId = this.auth.getUserId();
+    this.userRole = this.auth.getUserRole();
+  }
 
   ngOnInit(): void {
     this.consultaService.getConsultas().subscribe(data => this.consultas = data);
   }
 
-  role: string = 'psicologo';
-  tableColumns = ['Data', 'Status', 'Observações', this.setTableRole().replace('p', 'P')];
+  // consultas: any[] = [
+  //   {
+  //     id: 1,
+  //     data: '23/05/2025 16:00',
+  //     status: 'concluída',
+  //     observacoes: '',
+  //     paciente: 'João José dos Santos',
+  //     psicologo: 'Antonio Carlos da Silva'
+  //   },
+  //   {
+  //     id: 2,
+  //     data: '23/05/2025 16:00',
+  //     status: 'concluída',
+  //     observacoes: '',
+  //     paciente: 'João José dos Santos',
+  //     psicologo: 'Antonio Carlos da Silva'
+  //   }
+  // ]
 
-  consultas: any[] = [
-    {
-      id: 1,
-      data: '23/05/2025 16:00',
-      status: 'concluída',
-      observacoes: '',
-      paciente: 'João José dos Santos',
-      psicologo: 'Antonio Carlos da Silva'
-    },
-    {
-      id: 2,
-      data: '23/05/2025 16:00',
-      status: 'concluída',
-      observacoes: '',
-      paciente: 'João José dos Santos',
-      psicologo: 'Antonio Carlos da Silva'
-    }
-  ]
-
-  // consultas: Consulta[] = [];
+  consultas: Consulta[] = [];
 
   setTableRole() {
-    return this.role === 'psicologo' ? 'paciente' : 'psicologo';
+    return this.userRole === 'psicologo' ? 'paciente' : 'psicologo';
   }
 
   consultasHasData() {

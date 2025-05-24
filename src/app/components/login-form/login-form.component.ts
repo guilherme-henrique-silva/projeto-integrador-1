@@ -1,20 +1,28 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
 export class LoginFormComponent implements AfterViewInit {
 
+  emailInput = '';
+  passwordInput = '';
+  roleRadio = '';
+  crpInput = '';
+  
+  userId: string = 'asd@asd';
+  userRole: string = 'psicologo';
   isCheckedPsicologo: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngAfterViewInit(): void {
-    // Aplicar validação customizada do Bootstrap
     const forms = document.querySelectorAll<HTMLFormElement>('.needs-validation');
     const btnLogin = document.querySelector<HTMLFormElement>('#btnLogin');
 
@@ -29,13 +37,25 @@ export class LoginFormComponent implements AfterViewInit {
     });
 
     addEventListener("submit", (event) => {
-      alert('Olá! Vamos buscar na nossa base esse usuário e senha...');
-      this.router.navigate(['/home']);
+      this.login();
     })
   }
 
   onChange() {
     this.isCheckedPsicologo = !this.isCheckedPsicologo;
+  }
+
+  login() {
+    if(this.emailInput !== this.userId) {
+      console.log(this.emailInput);
+      console.log(this.passwordInput);
+      console.log(this.roleRadio);
+      console.log(this.crpInput);
+      this.auth.login(this.emailInput, this.roleRadio);
+      this.router.navigate(['/home']);
+    } else {
+      console.log('Já existe esse usuário!')
+    }
   }
 
 }

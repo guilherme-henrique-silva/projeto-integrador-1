@@ -1,25 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
 import { Router } from '@angular/router';
+import { ConsultaFormComponent } from '../consulta-form/consulta-form.component';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-consulta',
-  imports: [TopNavbarComponent],
+  imports: [TopNavbarComponent, ConsultaFormComponent],
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.css'
 })
 export class ConsultaComponent implements OnInit {
   
-  constructor(private router: Router) {}
+  userId: string | null;
+  userRole: string | null;
+
+  constructor(private auth: AuthService, private router: Router) {
+    this.userId = this.auth.getUserId();
+    this.userRole = this.auth.getUserRole();
+  }
 
   ngOnInit(): void {
     this.redirectNotAuthorized();
   }
 
-  role: string = 'psicologo';
-
   redirectNotAuthorized() {
-    if (this.role !== 'psicologo') {
+    if (this.userRole !== 'psicologo') {
       this.router.navigate(['not-authorized']);
     }
   }
