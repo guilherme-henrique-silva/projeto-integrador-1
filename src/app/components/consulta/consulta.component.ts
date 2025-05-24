@@ -10,7 +10,7 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.css'
 })
-export class ConsultaComponent implements OnInit {
+export class ConsultaComponent {
   
   userId: string | null;
   userRole: string | null;
@@ -18,15 +18,5 @@ export class ConsultaComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router) {
     this.userId = this.auth.getUserId();
     this.userRole = this.auth.getUserRole();
-  }
-
-  ngOnInit(): void {
-    this.redirectNotAuthorized();
-  }
-
-  redirectNotAuthorized() {
-    if (this.userRole !== 'psicologo') {
-      this.router.navigate(['not-authorized']);
-    }
   }
 }

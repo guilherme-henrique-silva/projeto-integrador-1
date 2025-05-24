@@ -14,7 +14,7 @@ export class TopNavbarComponent {
   navItems = [
     { label: 'Consultas', route: '/consultas' },
     { label: 'Progresso', route: '/progresso' },
-    { label: 'Laudos', route: '/laudos' }
+    { label: 'Avaliações', route: '/avaliacoes' }
   ];
   dropdownItems = [
     { label: 'Perfil', route: '/perfil' }

@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
 
 @Component({
-  selector: 'app-laudos',
+  selector: 'app-avaliacoes',
   imports: [TopNavbarComponent],
-  templateUrl: './laudos.component.html',
-  styleUrl: './laudos.component.css'
+  templateUrl: './avaliacoes.component.html',
+  styleUrl: './avaliacoes.component.css'
 })
-export class LaudosComponent {
+export class AvaliacoesComponent {
 
   user = {
     name: 'Fulano da Silva',
@@ -17,7 +17,7 @@ export class LaudosComponent {
 
   tableColumns = ['Data', 'Descrição', 'CID', '', ''];
 
-  laudosPaciente = [
+  avaliacoesPaciente = [
     {
       data: '13/01/2025',
       descricao: 'Depressão',

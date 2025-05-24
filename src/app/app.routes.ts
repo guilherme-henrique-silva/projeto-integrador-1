@@ -4,7 +4,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { LoginComponent } from './components/login/login.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { ConsultasComponent } from './components/consultas/consultas.component';
-import { LaudosComponent } from './components/laudos/laudos.component';
+import { AvaliacoesComponent } from './components/avaliacoes/avaliacoes.component';
 import { ProgressoComponent } from './components/progresso/progresso.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SigninComponent } from './components/signin/signin.component';
@@ -54,8 +54,8 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: "laudos",
-        component: LaudosComponent,
+        path: "avaliacoes",
+        component: AvaliacoesComponent,
         canActivate: [AuthGuard]
     },
     {
