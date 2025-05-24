@@ -29,4 +29,8 @@ export class TopNavbarComponent {
   logout() {
     this.auth.logout();
   }
+
+  getUserNome() {
+    return this.auth.getUserNome();
+  }
 }

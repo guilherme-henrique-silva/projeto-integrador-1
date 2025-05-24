@@ -1,12 +1,18 @@
-<div class="container">
+@if(alertMessage) {
+  <div class="alert m-3" [ngClass]="alertClass" role="alert">
+    {{ alertMessage }}
+  </div>
+}
+
+<div class="container w-75">
   <div class="row justify-content-md-center">
-    <div class="card">
-      <div class="card-header">Login</div>
+    <div class="col card border-primary m-3 p-0">
+      <div class="card-header bg-primary text-white">Login</div>
       <div class="card-body">
         <div class="card-text">
           Acesse aos nossos serviços como paciente ou psicólogo!
         </div>
-        <app-login-form></app-login-form>
+        <app-login-form (registerEvent)="handleRegisterEvent($event)"></app-login-form>
       </div>
     </div>
   </div>

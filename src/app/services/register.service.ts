@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class RegisterService {
 
+  error: string | null = null;
+  success: boolean = false;
   private REGISTER_URL = "http://localhost:3000/api/register"
 
   constructor(private httpClient: HttpClient) { }
@@ -17,12 +19,8 @@ export class RegisterService {
 
     headers = headers.set('Content-Type', 'application/json');
 
-    // if (token) {
-    //   headers = headers.set('Authorization', `Bearer ${token}`);
-    // }
-
     const options = { headers: headers };
 
-    return this.httpClient.post(this.REGISTER_URL, data, options)
+    return this.httpClient.post(this.REGISTER_URL, data, options);
   }
 }

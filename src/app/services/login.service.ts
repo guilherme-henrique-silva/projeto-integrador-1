@@ -6,23 +6,21 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-
+  
+  error: string | null = null;
+  success: boolean = false;
   private LOGIN_URL = "http://localhost:3000/api/login"
 
   constructor(private httpClient: HttpClient) { }
 
-  registrar(data: any): Observable<any> {
+  login(data: any): Observable<any> {
 
     let headers = new HttpHeaders();
 
     headers = headers.set('Content-Type', 'application/json');
 
-    // if (token) {
-    //   headers = headers.set('Authorization', `Bearer ${token}`);
-    // }
-
     const options = { headers: headers };
 
-    return this.httpClient.post(this.LOGIN_URL, data, options)
+    return this.httpClient.post(this.LOGIN_URL, data, options);
   }
 }
