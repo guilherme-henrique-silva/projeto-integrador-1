@@ -2,6 +2,8 @@
 
 Este projeto é uma **Single Page Application (SPA)** desenvolvida com [Angular](https://angular.io/), seguindo boas práticas de arquitetura, organização modular e uso de serviços para comunicação com APIs REST.
 
+O projeto está configurado para funcionar juntamente com o projeto [backend em Express com Sequelize - API RESTful](https://github.com/carloshdario/backend-saude-mental).
+
 ## 🚀 Tecnologias Utilizadas
 
 - [Angular CLI](https://angular.io/cli)
