@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
+import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-avaliacoes',
@@ -9,11 +11,13 @@ import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
 })
 export class AvaliacoesComponent {
 
-  user = {
-    name: 'Fulano da Silva',
-    context: 'paciente'
+  userId: string | null;
+  userRole: string | null;
+
+  constructor(private auth: AuthService, private router: Router) {
+    this.userId = this.auth.getUserId();
+    this.userRole = this.auth.getUserRole();
   }
-  nomePaciente = 'Fulano da Silva';
 
   tableColumns = ['Data', 'Descrição', 'CID', '', ''];
 

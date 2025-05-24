@@ -9,10 +9,13 @@ import { AuthService } from '../../auth/auth.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
   userId: string | null;
+  userRole: string | null;
 
   constructor(private auth: AuthService) {
     this.userId = this.auth.getUserId();
+    this.userRole = this.auth.getUserRole();
   }
 
 }
