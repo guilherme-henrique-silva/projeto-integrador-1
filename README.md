@@ -9,7 +9,7 @@ O projeto está configurado para funcionar juntamente com o projeto [backend em 
 - [Angular CLI](https://angular.io/cli)
 - [TypeScript](https://www.typescriptlang.org/)
 - [RxJS](https://rxjs.dev/)
-- [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS/) para estilização
+- [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS/) e [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/) para estilização
 - [Angular Router](https://angular.io/guide/router)
 - [HttpClient](https://angular.io/guide/http)
 
