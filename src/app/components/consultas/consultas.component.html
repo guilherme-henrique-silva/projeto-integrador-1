@@ -33,17 +33,18 @@
                         <td>{{ consulta.status }}</td>
                         <td>{{ consulta.observacoes }}</td>
                         @if(userRole == 'psicologo') {
-                            <td>{{ consulta.paciente }}</td>
-                            <td><button type="button" class="btn btn-primary" (click)="editConsulta(consulta.id)">Editar</button></td>
+                            <!-- <td>{{ consulta.paciente }}</td>
+                            <td><button type="button" class="btn btn-primary" (click)="editConsulta(consulta.id)">Editar</button></td> -->
                             <td>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 Excluir
                                 </button>
                             </td>
-                        } @else {
-                            <td>{{ consulta.psicologo }}</td>
                         }
+                        <!-- @else {
+                            <td>{{ consulta.psicologo }}</td>
+                        } -->
                     </tr>
                 }
             </tbody>

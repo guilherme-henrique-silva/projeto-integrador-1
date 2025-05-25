@@ -15,7 +15,8 @@ export class ConsultasComponent implements OnInit {
   userId: string | null;
   userRole: string | null;
 
-  tableColumns = ['Data', 'Status', 'Observações', this.setTableRole().replace('p', 'P')];
+  // tableColumns = ['Data', 'Status', 'Observações', this.setTableRole().replace('p', 'P')];
+  tableColumns = ['Data', 'Status', 'Observações'];
 
   constructor(private auth: AuthService, private router: Router, private consultaService: ConsultaService) {
     this.userId = this.auth.getUserId();
