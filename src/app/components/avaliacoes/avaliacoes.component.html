@@ -1,0 +1,38 @@
+<app-top-navbar></app-top-navbar>
+<div class="container m-3 p-0">
+    <div class="row justify-content-between">
+        <div class="col-auto"><h5>Avaliações</h5></div>
+    </div>
+</div>
+
+<div class="m-3 p-0">
+    <table class="table table-striped w-75">
+        <thead>
+            <tr>
+                @for(column of tableColumns; track column) {
+                    <th scope="col">{{ column }}</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for(avaliacao of avaliacoesPaciente; track avaliacao.data) {
+                <tr>
+                    <th scope="row">
+                        {{ avaliacao.data }}
+                        @if((avaliacoesPaciente.indexOf(avaliacao) + 1) == avaliacoesPaciente.length) {
+                            <span class="badge badge-pill badge-dark">Novo</span>
+                        }
+                    </th>
+                    <td>{{ avaliacao.descricao }}</td>
+                    <td>{{ avaliacao.cid }}</td>
+                    <td><button type="button" class="btn btn-outline-primary">Visualizar</button></td>
+                    @if(userRole == 'psicologo') {
+                        <td><button type="button" class="btn btn-primary">Editar</button></td>
+                    } @else {
+                        <td><button type="button" class="btn btn-primary">Download</button></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

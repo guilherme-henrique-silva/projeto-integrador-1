@@ -1,0 +1,34 @@
+<form class="needs-validation mt-4 mb-4" [formGroup]="consultaForm" novalidate>
+  <div class="form-group">
+    <label for="inputNomePaciente">Nome do Paciente</label>
+    <input class="form-control" type="text" placeholder="Fulano da Silva" formControlName="nome" name="nome" id="inputNomePaciente" required>
+    <div class="invalid-feedback">Nome inválido</div>
+  </div>
+  <!-- <div class="form-group">
+    <label for="exampleFormControlSelect1">Status</label>
+    <select class="form-control" formControlName="status" name="status" id="exampleFormControlSelect1" required>
+      <option selected>agendada</option>
+      <option>concluida</option>
+      <option>cancelada</option>
+    </select>
+  </div> -->
+  <div class="form-group">
+    <label for="data">Data da consulta:</label>
+    <input type="date" id="data" formControlName="data" name="data" required>
+    <div class="invalid-feedback">Data inválida</div>
+  </div>
+  <div class="form-group">
+    <label for="hora">Horário:</label>
+    <input type="time" id="hora" formControlName="hora" name="hora" required> 
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Observacoes</label>
+    <textarea class="form-control" formControlName="observacoes" name="observacoes" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-2">
+        <button type="submit" id="btnSalvarConsulta" class="btn btn-primary">Salvar</button>
+    </div>
+  </div>
+</form>

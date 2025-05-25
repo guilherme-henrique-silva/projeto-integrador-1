@@ -1,0 +1,8 @@
+<app-top-navbar></app-top-navbar>
+@if(alertMessage) {
+  <div class="alert alert-dismissible m-3" [ngClass]="alertClass" role="alert">
+    <div>{{ alertMessage }}</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+}
+<app-perfil-form (registerEvent)="handleRegisterEvent($event)"></app-perfil-form>

@@ -1,0 +1,22 @@
+<form class="row g-3 needs-validation mt-4 mb-4" novalidate>
+    <div class="form-row row">
+      <div class="col-md-6 col">
+        <label for="emailInput">Email</label>
+        <input [(ngModel)]="emailInput" type="email" class="form-control" id="emailInput" name="email" placeholder="name@example.com" required>
+        <div class="invalid-feedback">Email inválido</div>
+      </div>
+    </div>
+    <div class="form-row row">
+      <div class="col-md-6 col">
+        <label for="passwordInput">Senha</label>
+        <input [(ngModel)]="passwordInput" type="password" class="form-control" id="passwordInput" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="********" aria-describedby="passwordHelpBlock" required>
+        <div class="invalid-feedback">Senha inválida</div>
+        <div id="passwordHelpBlock" class="form-text">
+          A senha deve conter 8-20 caracteres, letras e números, não conter espaços, caracteres especiais ou emoji.
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" id="btnLogin" type="submit">Login</button>
+    </div>
+</form>
