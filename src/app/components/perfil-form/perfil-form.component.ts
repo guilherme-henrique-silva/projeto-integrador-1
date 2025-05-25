@@ -82,6 +82,8 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
             cep: [enderecoList[3]]
           });
 
+          this.onChange();
+
           this.emailInput = data.username;
           this.passwordInput = data.password;
           this.roleRadio = data.role;

@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 export interface Consulta {
   id: number;
@@ -18,26 +19,46 @@ export class ConsultaService {
   
   private apiUrl = 'http://localhost:3000/api/consultas';
 
-  constructor(private http: HttpClient) { }
+  constructor(private auth: AuthService, private http: HttpClient) { }
 
   getConsultas(): Observable<Consulta[]> {
-    return this.http.get<Consulta[]>(this.apiUrl);
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.get<Consulta[]>(this.apiUrl, { headers });
   }
 
   getConsulta(id: number): Observable<Consulta> {
-    return this.http.get<Consulta>(`${this.apiUrl}/${id}`);
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.get<Consulta>(`${this.apiUrl}/${id}`, { headers });
   }
 
-  addConsulta(consulta: Omit<Consulta, 'id'>): Observable<Consulta> {
-    return this.http.post<Consulta>(this.apiUrl, consulta);
+  addConsulta(consulta: any): Observable<any> {
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.post(this.apiUrl, consulta, { headers });
   }
 
   updateConsulta(id: number, consulta: Partial<Consulta>): Observable<Consulta> {
-    return this.http.put<Consulta>(`${this.apiUrl}/${id}`, consulta);
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.put<Consulta>(`${this.apiUrl}/${id}`, consulta, { headers });
   }
 
   deleteConsulta(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers });
   }
 
 }

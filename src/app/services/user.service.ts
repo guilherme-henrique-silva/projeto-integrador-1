@@ -20,7 +20,16 @@ export class UserService {
       'Authorization': `Bearer ${token}`,
     });
   
-    return this.http.get(`${this.USER_URL}/${userId}`, { headers });
+    return this.http.get(`${this.USER_URL}?id=${userId}`, { headers });
+  }
+
+  getUserByName(userNome: string): Observable<any> {
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+  
+    return this.http.get(`${this.USER_URL}?nome=${userNome}`, { headers });
   }
 
   updateUserById(userId: string, data: any): Observable<any> {
