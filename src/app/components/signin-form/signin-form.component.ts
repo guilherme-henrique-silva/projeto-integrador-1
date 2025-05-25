@@ -32,6 +32,12 @@ export class SigninFormComponent implements AfterViewInit{
 
   isCheckedPsicologo: boolean = false;
 
+  estadosItems = [
+    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
+    'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PB', 'PI', 'RJ', 'RN',
+    'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+  ]
+
   constructor(private auth: AuthService, private register: RegisterService, private router: Router) {
     this.userId = this.auth.getUserId();
     this.userRole = this.auth.getUserRole();
@@ -39,12 +45,6 @@ export class SigninFormComponent implements AfterViewInit{
       this.router.navigate(['/home']);
     }
   }
-
-  estadosItems = [
-    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
-    'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PB', 'PI', 'RJ', 'RN',
-    'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
-  ]
 
   ngAfterViewInit(): void {
     const forms = document.querySelectorAll<HTMLFormElement>('.needs-validation');
@@ -73,7 +73,7 @@ export class SigninFormComponent implements AfterViewInit{
         nome: this.nomeInput,
         crp: this.crpInput,
         telefone: this.telefoneInput,
-        endereco: enderecoCompleto.join(' ')
+        endereco: enderecoCompleto.join(', ')
       }
 
       this.register.registrar(data).subscribe({
@@ -88,6 +88,22 @@ export class SigninFormComponent implements AfterViewInit{
           this.registerEvent.emit({
             success: false,
             message: err.error?.error || 'Erro ao registrar usuário.'
+          });
+        }
+      });
+
+      this.auth.login(data).subscribe({
+        next: () => {
+          this.registerEvent.emit({
+            success: true,
+            message: 'Login realizado com sucesso!'
+          });
+
+        },
+        error: (err) => {
+          this.registerEvent.emit({
+            success: false,
+            message: err.error?.error || 'Erro ao realizar o login.'
           });
         }
       });

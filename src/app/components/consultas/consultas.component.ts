@@ -26,25 +26,6 @@ export class ConsultasComponent implements OnInit {
     this.consultaService.getConsultas().subscribe(data => this.consultas = data);
   }
 
-  // consultas: any[] = [
-  //   {
-  //     id: 1,
-  //     data: '23/05/2025 16:00',
-  //     status: 'concluída',
-  //     observacoes: '',
-  //     paciente: 'João José dos Santos',
-  //     psicologo: 'Antonio Carlos da Silva'
-  //   },
-  //   {
-  //     id: 2,
-  //     data: '23/05/2025 16:00',
-  //     status: 'concluída',
-  //     observacoes: '',
-  //     paciente: 'João José dos Santos',
-  //     psicologo: 'Antonio Carlos da Silva'
-  //   }
-  // ]
-
   consultas: Consulta[] = [];
 
   setTableRole() {

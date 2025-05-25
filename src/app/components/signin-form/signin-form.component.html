@@ -61,10 +61,13 @@
     <div class="col-md-2 col">
         <label for="inputState">Estado</label>
         <select [(ngModel)]="estadoSelect" id="inputState" name="estado" class="form-control" required>
-            <option selected>Escolher...</option>
-            @for(estado of estadosItems; track estado) {
-                <option>{{ estado }}</option>
-            }
+          @for(estado of estadosItems; track estado) {
+              @if(estado == 'SP') {
+                  <option selected>{{ estado }}</option>
+              } @else {
+                  <option>{{ estado }}</option>
+              }
+          }
         </select>
         <div class="invalid-feedback">Estado inválido</div>
     </div>

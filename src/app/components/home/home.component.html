@@ -1,2 +1,17 @@
 <app-top-navbar></app-top-navbar>
-<p>home works!</p>
+<div class="container py-4">
+  <div class="card shadow-sm rounded p-4">
+    <h2 class="mb-3">Bem-vindo à plataforma de saúde mental Mentalize!</h2>
+    <p class="lead">Olá, {{ userNome }}! Você está utilizando os nossos serviços como <strong>{{ userRole }}</strong>.</p>
+
+    @if(userRole == 'paciente') {
+        <div>
+          <p>Explore nossos recursos para acompanhamento emocional e marque consultas com psicólogos.</p>
+        </div>
+    } @else {
+        <div>
+          <p>Gerencie seus pacientes e acesse ferramentas clínicas para acompanhamento terapêutico.</p>
+        </div>
+    }
+  </div>
+</div>

@@ -12,10 +12,12 @@ export class HomeComponent {
 
   userId: string | null;
   userRole: string | null;
+  userNome: string | null;
 
   constructor(private auth: AuthService) {
     this.userId = this.auth.getUserId();
     this.userRole = this.auth.getUserRole();
+    this.userNome = this.auth.getUserNome();
   }
 
 }
