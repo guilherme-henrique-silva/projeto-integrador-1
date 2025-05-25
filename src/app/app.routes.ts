@@ -10,6 +10,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { ConsultaComponent } from './components/consulta/consulta.component';
 import { AuthGuard } from './auth/auth.guard';
+import { AvaliacaoComponent } from './components/avaliacao/avaliacao.component';
 
 export const routes: Routes = [
     {
@@ -56,6 +57,16 @@ export const routes: Routes = [
     {
         path: "avaliacoes",
         component: AvaliacoesComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: "create/avaliacao",
+        component: AvaliacaoComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: "edit/avaliacao",
+        component: AvaliacaoComponent,
         canActivate: [AuthGuard]
     },
     {

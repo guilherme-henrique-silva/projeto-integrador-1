@@ -12,9 +12,8 @@ export class ConsultaFormComponent implements AfterViewInit {
   constructor(private router: Router) {}
   
   ngAfterViewInit(): void {
-    // Aplicar validação customizada do Bootstrap
     const forms = document.querySelectorAll<HTMLFormElement>('.needs-validation');
-    const btnSignin = document.querySelector<HTMLFormElement>('#btnCadastrarConsulta');
+    const btnSalvar = document.querySelector<HTMLFormElement>('#btnSalvarConsulta');
 
     forms.forEach((form) => {
       form.addEventListener('submit', (event) => {
@@ -27,7 +26,6 @@ export class ConsultaFormComponent implements AfterViewInit {
     });
 
     addEventListener("submit", (event) => {
-      alert('Olá! Vamos buscar na nossa base esse usuário e senha...');
       this.router.navigate(['/home']);
     })
   }
