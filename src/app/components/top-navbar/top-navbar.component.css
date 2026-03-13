@@ -1,104 +1,114 @@
-/* Navbar flutuante com efeito Glassmorphism */
+/* Fundo em Azul Mentalize com degradê sutil */
+.bg-primary-gradient {
+    background: linear-gradient(90deg, #0d6efd 0%, #0a58ca 100%);
+}
+
 .navbar {
-    background: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(10px); /* Efeito de vidro embaçado */
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    padding: 0.7rem 0;
+    transition: all 0.3s ease;
 }
 
-/* Marca com gradiente sutil */
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 800;
-    background: linear-gradient(45deg, #0d6efd, #0dcaf0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
+    cursor: pointer;
+    color: #ffffff !important;
 }
 
-/* Links em formato de "Pílula" ao passar o mouse */
-.nav-link {
-    color: #444 !important;
-    font-weight: 600;
+.brand-dot {
+    color: #0dcaf0; /* Ciano para o ponto final */
+}
+
+/* Links Customizados */
+.custom-link {
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.custom-link:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.active-link {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    font-weight: 700 !important;
+}
+
+/* Trigger do Perfil */
+.profile-trigger {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
+    border-radius: 50px;
+    transition: all 0.3s;
+}
+
+.profile-trigger:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.user-greeting {
+    font-size: 0.7rem;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.user-name {
     font-size: 0.9rem;
-    padding: 0.6rem 1.2rem !important;
-    margin: 0 4px;
-    border-radius: 10px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1;
 }
 
-.nav-link:hover {
-    background: rgba(13, 110, 253, 0.08); /* Fundo azul bem clarinho */
-    color: #0d6efd !important;
-    transform: translateY(-1px);
-}
-
-/* Item Ativo sem a linha embaixo (mais limpo) */
-.nav-link.active {
-    background: #0d6efd;
-    color: #fff !important;
-    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
-}
-
-/* Avatar do Usuário (Simulado no Dropdown) */
-.nav-item.dropdown {
+/* Avatar Estilizado */
+.avatar-box {
+    width: 34px;
+    height: 34px;
+    background: #ffffff;
+    color: #0d6efd;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    margin-left: 1.5rem;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-toggle {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: transparent;
-    border: none !important;
-    font-weight: 600;
-    color: #333 !important;
-}
-
-.dropdown-toggle::after {
-    display: none; /* Remove a setinha padrão */
-}
-
-/* Menu Dropdown Flutuante */
+/* Menu Dropdown */
 .dropdown-menu {
-    border: 1px solid rgba(0,0,0,0.05);
-    border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    padding: 12px;
-    margin-top: 15px !important;
-    min-width: 220px;
+    border-radius: 12px;
+    padding: 8px;
+    margin-top: 12px !important;
+    min-width: 210px;
 }
 
 .dropdown-item {
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 10px 15px;
-    color: #555;
     font-weight: 500;
-    transition: all 0.2s;
+    color: #4b5563;
 }
 
 .dropdown-item:hover {
-    background: #f8f9fa;
+    background-color: #f3f4f6;
     color: #0d6efd;
-    padding-left: 20px;
 }
 
-/* Botão de Logout destacado */
-.logout-btn {
+.logout-link {
     color: #dc3545 !important;
 }
 
-.logout-btn:hover {
-    background: #fff5f5 !important;
+.logout-link:hover {
+    background-color: #fef2f2 !important;
 }
 
-/* Cursor pointer para todos os itens interativos */
-.nav-link, .dropdown-item, .navbar-brand {
+/* Cursor pointer para tudo que é clicável */
+.nav-link, .dropdown-item, .navbar-brand, .profile-trigger {
     cursor: pointer;
 }

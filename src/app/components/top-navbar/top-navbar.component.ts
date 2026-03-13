@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-top-navbar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './top-navbar.component.html',
   styleUrls: ['./top-navbar.component.css']
 })
@@ -16,8 +17,10 @@ export class TopNavbarComponent {
     { label: 'Progresso', route: '/progresso' },
     { label: 'Avaliações', route: '/avaliacoes' }
   ];
+
   dropdownItems = [
-    { label: 'Perfil', route: '/perfil' }
+    { label: 'Ver Perfil', route: '/perfil' },
+    { label: 'Configurações', route: '/configuracoes' }
   ];
 
   constructor(private auth: AuthService, private router: Router) {}
@@ -28,9 +31,10 @@ export class TopNavbarComponent {
 
   logout() {
     this.auth.logout();
+    this.router.navigate(['/welcome']);
   }
 
-  getUserNome() {
-    return this.auth.getUserNome();
+  getUserNome(): string {
+    return this.auth.getUserNome() || 'Usuário';
   }
 }
