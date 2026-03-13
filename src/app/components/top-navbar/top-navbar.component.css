@@ -1,3 +1,104 @@
-li:hover{
+/* Navbar flutuante com efeito Glassmorphism */
+.navbar {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(10px); /* Efeito de vidro embaçado */
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Marca com gradiente sutil */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+}
+
+/* Links em formato de "Pílula" ao passar o mouse */
+.nav-link {
+    color: #444 !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem !important;
+    margin: 0 4px;
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+    background: rgba(13, 110, 253, 0.08); /* Fundo azul bem clarinho */
+    color: #0d6efd !important;
+    transform: translateY(-1px);
+}
+
+/* Item Ativo sem a linha embaixo (mais limpo) */
+.nav-link.active {
+    background: #0d6efd;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+/* Avatar do Usuário (Simulado no Dropdown) */
+.nav-item.dropdown {
+    display: flex;
+    align-items: center;
+    margin-left: 1.5rem;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: none !important;
+    font-weight: 600;
+    color: #333 !important;
+}
+
+.dropdown-toggle::after {
+    display: none; /* Remove a setinha padrão */
+}
+
+/* Menu Dropdown Flutuante */
+.dropdown-menu {
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    padding: 12px;
+    margin-top: 15px !important;
+    min-width: 220px;
+}
+
+.dropdown-item {
+    border-radius: 10px;
+    padding: 10px 15px;
+    color: #555;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background: #f8f9fa;
+    color: #0d6efd;
+    padding-left: 20px;
+}
+
+/* Botão de Logout destacado */
+.logout-btn {
+    color: #dc3545 !important;
+}
+
+.logout-btn:hover {
+    background: #fff5f5 !important;
+}
+
+/* Cursor pointer para todos os itens interativos */
+.nav-link, .dropdown-item, .navbar-brand {
     cursor: pointer;
 }
