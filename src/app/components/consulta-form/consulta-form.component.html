@@ -1,34 +1,52 @@
-<form class="needs-validation mt-4 mb-4" [formGroup]="consultaForm" novalidate>
-  <div class="form-group">
-    <label for="inputNomePaciente">Nome do Paciente</label>
-    <input class="form-control" type="text" placeholder="Fulano da Silva" formControlName="nome" name="nome" id="inputNomePaciente" required>
-    <div class="invalid-feedback">Nome inválido</div>
-  </div>
-  <!-- <div class="form-group">
-    <label for="exampleFormControlSelect1">Status</label>
-    <select class="form-control" formControlName="status" name="status" id="exampleFormControlSelect1" required>
-      <option selected>agendada</option>
-      <option>concluida</option>
-      <option>cancelada</option>
-    </select>
-  </div> -->
-  <div class="form-group">
-    <label for="data">Data da consulta:</label>
-    <input type="date" id="data" formControlName="data" name="data" required>
-    <div class="invalid-feedback">Data inválida</div>
-  </div>
-  <div class="form-group">
-    <label for="hora">Horário:</label>
-    <input type="time" id="hora" formControlName="hora" name="hora" required> 
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Observacoes</label>
-    <textarea class="form-control" formControlName="observacoes" name="observacoes" id="exampleFormControlTextarea1" rows="3"></textarea>
+<form [formGroup]="consultaForm" (ngSubmit)="onSubmit()" class="row g-3">
+  
+  <div class="col-md-12">
+    <label class="form-label fw-semibold">Nome do Paciente</label>
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Digite o nome completo"
+      formControlName="nome"
+      [ngClass]="{'is-invalid': consultaForm.get('nome')?.touched && consultaForm.get('nome')?.invalid}">
+    <div class="invalid-feedback">O nome é obrigatório (mín. 3 caracteres).</div>
   </div>
 
-  <div class="form-group">
-    <div class="col-md-2">
-        <button type="submit" id="btnSalvarConsulta" class="btn btn-primary">Salvar</button>
-    </div>
+  <div class="col-md-6">
+    <label class="form-label fw-semibold">Data da Consulta</label>
+    <input 
+      type="date" 
+      class="form-control" 
+      formControlName="data"
+      [ngClass]="{'is-invalid': consultaForm.get('data')?.touched && consultaForm.get('data')?.invalid}">
+    <div class="invalid-feedback">Selecione uma data válida.</div>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label fw-semibold">Horário</label>
+    <input 
+      type="time" 
+      class="form-control" 
+      formControlName="hora"
+      [ngClass]="{'is-invalid': consultaForm.get('hora')?.touched && consultaForm.get('hora')?.invalid}">
+    <div class="invalid-feedback">Informe o horário.</div>
+  </div>
+
+  <div class="col-md-12">
+    <label class="form-label fw-semibold">Observações</label>
+    <textarea 
+      class="form-control" 
+      rows="3" 
+      placeholder="Detalhes adicionais sobre a queixa ou encaminhamento..."
+      formControlName="observacoes"></textarea>
+  </div>
+
+  <div class="col-12 mt-4 d-flex gap-2">
+    <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" [disabled]="isSubmitting">
+      @if (isSubmitting) {
+        <span class="spinner-border spinner-border-sm me-2"></span>Salvando...
+      } @else {
+        <i class="bi bi-check-lg me-2"></i>Agendar Consulta
+      }
+    </button>
   </div>
 </form>

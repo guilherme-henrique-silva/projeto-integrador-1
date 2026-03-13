@@ -1,77 +1,28 @@
-/* Container de Fundo para dar contraste com a Navbar branca */
 .dashboard-container {
-    min-height: calc(100vh - 70px);
-    background-color: #f8fafc; /* Cinza azulado muito leve */
-    padding-bottom: 3rem;
+    min-height: 80vh;
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
-/* Badge de Função (Paciente/Psicólogo) */
-.badge-role {
-    display: inline-block;
-    padding: 4px 12px;
-    background: rgba(13, 110, 253, 0.1);
-    color: #0d6efd;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-radius: 50px;
-    margin-bottom: 1rem;
-    letter-spacing: 0.5px;
-}
-
-/* Títulos */
-h1 {
-    letter-spacing: -1px;
-    color: #1e293b;
-}
-
-/* Card Principal: Layout "Clean" */
-.main-card {
-    border-radius: 20px; /* Cantos bem arredondados para suavidade */
-    background: #ffffff;
-    transition: transform 0.3s ease;
-}
-
-/* Estilização dos Botões para parecerem modernos */
-.btn-lg {
-    font-size: 1rem;
-    font-weight: 600;
+.icon-box {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 12px;
-    padding: 12px 24px;
 }
 
-.btn-primary {
-    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+.main-card {
+    border-left: 6px solid #0d6efd; /* Linha lateral para dar destaque */
 }
 
-/* Animação de entrada suave */
-.animate-in {
-    animation: fadeInUp 0.5s ease-out forwards;
+/* Efeito de Hover nos botões secundários */
+.btn-outline-primary:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsividade: Espaçamento em telas menores */
-@media (max-width: 768px) {
-    .welcome-hero {
-        text-align: center;
-        margin-top: 2rem !important;
-    }
-    
-    .d-flex {
-        flex-direction: column; /* Botões empilhados no mobile */
-    }
-    
-    .btn-lg {
-        width: 100%;
-    }
+/* Ajuste para o Badge */
+.bg-primary-subtle {
+    background-color: #e7f1ff !important;
 }

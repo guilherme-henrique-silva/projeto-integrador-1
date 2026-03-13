@@ -1,37 +1,61 @@
-<main class="dashboard-container">
-  <div class="container py-4"> <section class="welcome-hero mb-4">
+<main class="dashboard-container flex-grow-1">
+  <div class="container py-5">
+    
+    <section class="welcome-hero mb-5 animate-in">
       <div class="row align-items-center">
         <div class="col-md-8">
-          <span class="badge-role badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold mb-2 d-inline-block">
-             {{ userRole | titlecase }}
+          <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold mb-3 d-inline-block shadow-sm">
+             <i class="bi bi-person-badge me-1"></i> {{ userRole | titlecase }}
           </span>
-          <h1 class="display-5 fw-bold text-dark">Olá, {{ userNome }}!</h1>
-          <p class="text-muted fs-5">Bem-vindo à plataforma <strong>Mentalize</strong>. Como podemos ajudar hoje?</p>
+          <h1 class="display-4 fw-bold text-dark">{{ saudacao }}, {{ userNome }}!</h1>
+          <p class="text-muted fs-5">O que você gostaria de realizar na plataforma <strong>Mentalize</strong> agora?</p>
         </div>
       </div>
     </section>
 
-    <div class="card main-card border-0 shadow-sm rounded-4">
+    <div class="card main-card border-0 shadow-lg rounded-4 overflow-hidden">
       <div class="card-body p-4 p-md-5">
+        
         @if(userRole === 'paciente') {
           <div class="role-content animate-in">
-            <h3 class="h4 fw-bold">Sua Jornada de Bem-estar</h3>
-            <p class="text-secondary mb-4">Explore nossos recursos para acompanhamento emocional e marque consultas com especialistas qualificados.</p>
-            <div class="d-flex flex-wrap gap-3">
-              <button class="btn btn-primary btn-lg px-4 rounded-3 shadow-sm" (click)="navigateTo('/create/consulta')">Nova Consulta</button>
-              <button class="btn btn-outline-primary btn-lg px-4 rounded-3" (click)="navigateTo('/progresso')">Ver Progresso</button>
+            <div class="d-flex align-items-center mb-3">
+              <div class="icon-box bg-primary text-white me-3">
+                <i class="bi bi-heart-pulse-fill fs-4"></i>
+              </div>
+              <h3 class="h4 fw-bold m-0">Sua Jornada de Bem-estar</h3>
+            </div>
+            <p class="text-secondary mb-4 fs-5">Acompanhe seu histórico emocional e agende sessões com nossos especialistas.</p>
+            <div class="d-grid d-md-flex gap-3">
+              <button class="btn btn-primary btn-lg px-4" (click)="navigateTo('/create/consulta')">
+                <i class="bi bi-plus-lg me-2"></i>Nova Consulta
+              </button>
+              <button class="btn btn-outline-primary btn-lg px-4" (click)="navigateTo('/progresso')">
+                <i class="bi bi-graph-up-arrow me-2"></i>Ver Meu Progresso
+              </button>
             </div>
           </div>
-        } @else {
+        } 
+        
+        @else {
           <div class="role-content animate-in">
-            <h3 class="h4 fw-bold">Painel Clínico</h3>
-            <p class="text-secondary mb-4">Gerencie seus pacientes, visualize históricos e acesse ferramentas para otimizar seu atendimento terapêutico.</p>
-            <div class="d-flex flex-wrap gap-3">
-              <button class="btn btn-primary btn-lg px-4 rounded-3 shadow-sm">Lista de Pacientes</button>
-              <button class="btn btn-outline-primary btn-lg px-4 rounded-3">Agenda do Dia</button>
+            <div class="d-flex align-items-center mb-3">
+              <div class="icon-box bg-success text-white me-3">
+                <i class="bi bi-clipboard2-pulse-fill fs-4"></i>
+              </div>
+              <h3 class="h4 fw-bold m-0">Painel Clínico</h3>
+            </div>
+            <p class="text-secondary mb-4 fs-5">Gerencie seus prontuários e organize sua agenda de atendimentos.</p>
+            <div class="d-grid d-md-flex gap-3">
+              <button class="btn btn-primary btn-lg px-4" (click)="navigateTo('/consultas')">
+                <i class="bi bi-people-fill me-2"></i>Lista de Pacientes
+              </button>
+              <button class="btn btn-outline-primary btn-lg px-4">
+                <i class="bi bi-calendar-check me-2"></i>Agenda do Dia
+              </button>
             </div>
           </div>
         }
+
       </div>
     </div>
 

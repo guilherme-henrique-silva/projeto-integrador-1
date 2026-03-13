@@ -1,123 +1,79 @@
-import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConsultaService } from '../../services/consulta.service';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Observable, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
+import { ConsultaService } from '../../services/consulta.service';
+import { UserService } from '../../services/user.service';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-consulta-form',
+  standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './consulta-form.component.html',
   styleUrl: './consulta-form.component.css'
 })
-export class ConsultaFormComponent implements AfterViewInit {
-
+export class ConsultaFormComponent implements OnInit {
   @Output() registerEvent = new EventEmitter<{ success: boolean; message: string }>();
 
-  userId: string | null;
-  userRole: string | null;
+  consultaForm!: FormGroup;
+  isSubmitting = false;
 
-  consultaForm = new FormGroup({
-    nome: new FormControl(),
-    data: new FormControl(),
-    hora: new FormControl(),
-    // status: new FormControl(),
-    observacoes: new FormControl()
-  });
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private consultaService: ConsultaService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private consultaService: ConsultaService, private userService: UserService, private router: Router) {
-
-    this.userId = this.auth.getUserId();
-    this.userRole = this.auth.getUserRole();
+  ngOnInit(): void {
+    this.initForm();
   }
-  
-  ngAfterViewInit(): void {
-    const forms = document.querySelectorAll<HTMLFormElement>('.needs-validation');
-    const btnSalvar = document.querySelector<HTMLFormElement>('#btnSalvarConsulta');
 
-    forms.forEach((form) => {
-      form.addEventListener('submit', (event) => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
+  private initForm(): void {
+    this.consultaForm = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(3)]],
+      data: ['', Validators.required],
+      hora: ['', Validators.required],
+      observacoes: ['']
     });
+  }
 
-    addEventListener("submit", (event) => {
+  onSubmit(): void {
+    if (this.consultaForm.invalid) {
+      this.consultaForm.markAllAsTouched();
+      return;
+    }
 
-      const formValues = this.consultaForm.value;
+    this.isSubmitting = true;
+    const { nome, data, hora, observacoes } = this.consultaForm.value;
+    const dataCompleta = `${data}T${hora}:00`;
 
-      // Combina data e hora: '2025-05-25' + '15:00' -> ISO 8601: '2025-05-25T15:00:00'
-      const dataCompleta = `${formValues.data}T${formValues.hora}:00`;
-
-      const consulta = {
-        data: dataCompleta,
-        observacoes: formValues.observacoes,
-        paciente_id: ''
-      };
-
-
-      this.consultarPorNome(formValues.nome).pipe(
-        switchMap((pacienteData) => {
-          consulta.paciente_id = pacienteData.id;
-          return this.consultaService.addConsulta(consulta);
-        })
-      ).subscribe({
-        next: () => {
-          this.registerEvent.emit({
-            success: true,
-            message: 'Consulta registrada com sucesso!'
-          });
-        },
-        error: (err) => {
-          this.registerEvent.emit({
-            success: false,
-            message: err.error?.error || 'Erro ao consultar ou registrar a consulta.'
-          });
-        }
-      });
+    // Fluxo: Busca ID do paciente -> Salva Consulta
+    this.userService.getUserByName(nome).pipe(
+      switchMap((pacienteData) => {
+        const payload = {
+          data: dataCompleta,
+          observacoes: observacoes,
+          paciente_id: pacienteData.id
+        };
+        return this.consultaService.addConsulta(payload);
+      })
+    ).subscribe({
+      next: () => {
+        this.registerEvent.emit({ success: true, message: 'Consulta agendada com sucesso!' });
+        this.consultaForm.reset();
+        this.isSubmitting = false;
+      },
+      error: (err) => {
+        this.isSubmitting = false;
+        this.registerEvent.emit({
+          success: false,
+          message: err.error?.message || 'Erro ao processar agendamento.'
+        });
+      }
     });
-
-
-    //   this.consultarPorNome(formValues.nome).subscribe({
-    //     next: (data) => {
-    //       consulta.paciente_id = data.id;
-    //       console.log(consulta);
-          
-    //     },
-    //     error: (err) => {
-    //       this.registerEvent.emit({
-    //         success: false,
-    //         message: err.error?.error || 'Erro ao consultar os dados do paciente.'
-    //       });
-    //     }
-    //   });
-
-    //   this.consultaService.addConsulta(consulta).subscribe({
-    //     next: () => {
-    //       this.registerEvent.emit({
-    //         success: true,
-    //         message: 'Consulta registrada com sucesso!'
-    //       });
-    //     },
-    //     error: (err) => {
-    //       console.error('Erro ao registrar consulta', err);
-    //       this.registerEvent.emit({
-    //         success: false,
-    //         message: err.error?.error || `Erro ao registrar consulta: ${err.message}`
-    //       });
-    //     }
-    //   });
-    // });
   }
-
-  consultarPorNome(nome: string): Observable<any> {
-    return this.userService.getUserByName(nome);
-  }
-
 }
