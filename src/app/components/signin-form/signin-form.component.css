@@ -1,0 +1,117 @@
+/* Importação de fonte moderna (Opcional, pode ser no styles.css global) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:host {
+    font-family: 'Inter', sans-serif;
+    display: block;
+    background-color: #f8fafc; /* Cinza bem clarinho para o fundo da página */
+}
+
+/* Card Principal */
+.card {
+    max-width: 900px;
+    margin: 2rem auto;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 16px;
+}
+
+/* Títulos */
+h2, h3 {
+    color: #1e293b;
+    letter-spacing: -0.5px;
+}
+
+/* Labels e Inputs */
+.form-label {
+    color: #475569;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+    color: #1e293b;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Efeito de foco profissional (azul sem brilho excessivo) */
+.form-control:focus, .form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+    outline: none;
+}
+
+/* Estilo dos Radios e Checkboxes */
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.form-check-label {
+    color: #64748b;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Botões */
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #0b5ed7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+.btn-primary:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+}
+
+.btn-outline-danger {
+    border: 1.5px solid #fee2e2;
+    color: #dc2626;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    color: white;
+}
+
+/* Seções de divisão (HR) */
+hr {
+    margin: 2rem 0;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* Feedback de Validação */
+.text-danger {
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+}
+
+/* Animação suave para o campo CRP que aparece/some */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.col-md-6[ng-reflect-ng-if="true"], /* Angular fallback */
+div[ng-reflect-ng-if="true"] {
+    animation: fadeIn 0.3s ease-out;
+}
