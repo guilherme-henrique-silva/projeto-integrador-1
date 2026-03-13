@@ -1,18 +1,25 @@
-@if(alertMessage) {
-  <div class="alert m-3" [ngClass]="alertClass" role="alert">
-    {{ alertMessage }}
+<div class="signin-wrapper d-flex align-items-center justify-content-center">
+  <div class="alert-container" *ngIf="alertMessage">
+    <div class="alert shadow-lg border-0 animate slideIn" [ngClass]="alertClass" role="alert">
+      {{ alertMessage }}
+    </div>
   </div>
-}
 
-<div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col card border-primary m-3 p-0">
-      <div class="card-header bg-primary text-white">Cadastro</div>
-      <div class="card-body">
-        <div class="card-text">
-          Faça o seu registro gratuitamente para acompanhar de forma prática sua saúde mental ou os seus pacientes!
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9 col-xl-8"> <div class="text-center mb-4">
+          <h1 class="display-6 fw-bold text-dark">Mentalize<span class="text-primary">.</span></h1>
+          <p class="text-muted">Acompanhe sua saúde mental ou seus pacientes de forma prática.</p>
         </div>
+        
         <app-signin-form (registerEvent)="handleRegisterEvent($event)"></app-signin-form>
+        
+        <div class="text-center mt-4">
+          <p class="text-muted">
+            Já possui uma conta? 
+            <a href="/login" class="text-primary fw-bold text-decoration-none">Fazer Login</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
