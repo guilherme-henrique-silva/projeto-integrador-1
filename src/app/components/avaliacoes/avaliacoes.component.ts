@@ -1,42 +1,55 @@
-import { Component } from '@angular/core';
-import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
-import { AuthService } from '../../auth/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
+import { AvaliacaoService, Avaliacao } from '../../services/avaliacao.service'; 
 
 @Component({
   selector: 'app-avaliacoes',
-  imports: [TopNavbarComponent],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './avaliacoes.component.html',
   styleUrl: './avaliacoes.component.css'
 })
-export class AvaliacoesComponent {
+export class AvaliacoesComponent implements OnInit {
 
   userId: string | null;
   userRole: string | null;
+  avaliacoesPaciente: Avaliacao[] = [];
+  isLoading = true;
 
-  constructor(private auth: AuthService, private router: Router) {
+  // Alterado de private para public para o HTML conseguir enxergar
+  constructor(
+    private auth: AuthService, 
+    private avaliacaoService: AvaliacaoService,
+    public router: Router 
+  ) {
     this.userId = this.auth.getUserId();
     this.userRole = this.auth.getUserRole();
   }
 
-  tableColumns = ['Data', 'Descrição', 'CID', '', ''];
+  ngOnInit(): void {
+    this.carregarDados();
+  }
 
-  avaliacoesPaciente = [
-    {
-      data: '13/01/2025',
-      descricao: 'Depressão',
-      cid: 'F32.0'
-    },
-    {
-      data: '10/02/2025',
-      descricao: 'Depressão',
-      cid: 'F32.0'
-    },
-    {
-      data: '10/03/2025',
-      descricao: 'Depressão',
-      cid: 'F32.1'
+  carregarDados(): void {
+    if (this.userId) {
+      this.avaliacaoService.listarPorPaciente(this.userId).subscribe({
+        next: (dados) => {
+          this.avaliacoesPaciente = dados;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Erro ao buscar avaliações:', err);
+          this.isLoading = false;
+        }
+      });
+    } else {
+      this.isLoading = false;
     }
-  ];
+  }
 
+  visualizar(id: number | undefined) {
+    if (id) this.router.navigate(['/avaliacao', id]);
+  }
 }

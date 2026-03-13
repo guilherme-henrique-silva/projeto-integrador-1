@@ -1,3 +1,27 @@
-.badge {
-    background-color: rgba(13,110,253,1);
+.table-hover tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.03);
+    transition: background-color 0.2s ease;
+}
+
+.btn-white {
+    background-color: #fff;
+}
+
+.btn-white:hover {
+    background-color: #f8f9fa;
+}
+
+.animate-in {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
