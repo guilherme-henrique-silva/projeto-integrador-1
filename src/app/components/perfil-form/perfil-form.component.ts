@@ -1,201 +1,97 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
-import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-perfil-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './perfil-form.component.html',
-  styleUrl: './perfil-form.component.css'
+  styleUrls: ['./perfil-form.component.css']
 })
-export class PerfilFormComponent implements OnInit, AfterViewInit {
-
+export class PerfilFormComponent implements OnInit {
   @Output() registerEvent = new EventEmitter<{ success: boolean; message: string }>();
 
+  form: FormGroup;
   userId: string | null;
-  userRole: string | null;
+  estadosItems = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
 
-  nomeInput = '';
-  telefoneInput = '';
-  emailInput = '';
-  passwordInput = '';
-  roleRadio = '';
-  crpInput = '';
-  enderecoInput = '';
-  cidadeInput = '';
-  estadoSelect = '';
-  CEPInput = '';
-  checkboxInput = '';
-
-  isCheckedPsicologo: boolean = false;
-
-  estadosItems = [
-    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
-    'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PB', 'PI', 'RJ', 'RN',
-    'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
-  ]
-
-  form = new FormGroup({
-    username: new FormControl(),
-    password: new FormControl(),
-    role: new FormControl(),
-    crp: new FormControl(),
-    nome: new FormControl(),
-    telefone: new FormControl(),
-    endereco: new FormControl(),
-    cidade: new FormControl(),
-    estado: new FormControl(),
-    cep: new FormControl()
-  });
-
-  dbData = {};
-
-  constructor(private auth: AuthService, private userService: UserService, private router: Router, private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private userService: UserService
+  ) {
     this.userId = this.auth.getUserId();
-    this.userRole = this.auth.getUserRole();
+    
+    // Inicialização do Formulário com Validações
+    this.form = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(3)]],
+      telefone: ['', Validators.required],
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      role: ['paciente', Validators.required],
+      crp: [''],
+      endereco: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['SP', Validators.required],
+      cep: ['', [Validators.required, Validators.pattern('[0-9]{8}')]]
+    });
   }
 
   ngOnInit(): void {
-    if (this.userId) {
-      this.dbData = this.userService.getUserById(this.userId).subscribe({
-        next: (data) => {
-          this.dbData = data;
-
-          const enderecoList = data.endereco.split(",").map(function(item: string) {
-            return item.trim();
-          });
-
-          this.form = this.fb.group({
-            username: [data.username],
-            password: [data.password],
-            role: [data.role],
-            crp: [data.crp],
-            nome: [data.nome],
-            telefone: [data.telefone],
-            endereco: [enderecoList[0]],
-            cidade: [enderecoList[1]],
-            estado: [enderecoList[2]],
-            cep: [enderecoList[3]]
-          });
-
-          this.onChange();
-
-          this.emailInput = data.username;
-          this.passwordInput = data.password;
-          this.roleRadio = data.role;
-          this.crpInput = data.crp;
-          this.nomeInput = data.nome;
-          this.telefoneInput = data.telefone;
-          this.enderecoInput = enderecoList[0];
-          this.cidadeInput = enderecoList[1];
-          this.estadoSelect = enderecoList[2];
-          this.CEPInput = enderecoList[3];
-        },
-        error: (err) => {
-          console.error('Erro ao buscar usuário', err);
-          this.registerEvent.emit({
-            success: false,
-            message: err.error?.error || `Erro ao buscar usuário: ${err.message}`
-          });
-        }
-      });
-
-
-    }    
+    this.loadUserData();
   }
 
-  ngAfterViewInit(): void {
-    const forms = document.querySelectorAll<HTMLFormElement>('.needs-validation');
-    const btnDelete = document.querySelector<HTMLFormElement>('#btnDelete');
-    const btnUpdate = document.querySelector<HTMLFormElement>('#btnUpdate');
+  loadUserData() {
+    if (!this.userId) return;
 
-    forms.forEach((form) => {
-      form.addEventListener('submit', (event) => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-
-    btnDelete?.addEventListener("click", (event) => {
-      if(this.userId){
-        console.log(this.userId);
+    this.userService.getUserById(this.userId).subscribe({
+      next: (data) => {
+        const parts = data.endereco?.split(',') || [];
         
-        this.deleteUser(this.userId).subscribe({
-          next: () => {
-            this.registerEvent.emit({
-              success: true,
-              message: 'Usuário excluído com sucesso! Saindo da aplicação...'
-            });
-
-            setTimeout(() => {
-              this.auth.logout();
-            }, 3000);
-          },
-          error: (err) => {
-            this.registerEvent.emit({
-              success: false,
-              message: err.error?.error || `Erro ao excluir o usuário: ${err.message}`
-            });
-          }
+        // patchValue preenche o formulário de uma vez
+        this.form.patchValue({
+          ...data,
+          endereco: parts[0]?.trim(),
+          cidade: parts[1]?.trim(),
+          estado: parts[2]?.trim() || 'SP',
+          cep: parts[3]?.trim()
         });
-      }
-    });
-
-    addEventListener("submit", (event) => {
-
-      const enderecoCompleto: string[] = [
-        this.enderecoInput, this.cidadeInput, this.estadoSelect, this.CEPInput
-      ];
-
-      const data = {
-        username: this.emailInput,
-        password: this.passwordInput,
-        role: this.roleRadio,
-        nome: this.nomeInput,
-        crp: this.crpInput,
-        telefone: this.telefoneInput,
-        endereco: enderecoCompleto.join(', ')
-      }
-
-      if(this.userId) {        
-        this.userService.updateUserById(this.userId, data).subscribe({
-          next: () => {
-            this.registerEvent.emit({
-              success: true,
-              message: 'Atualização de cadastro realizada com sucesso!'
-            });
-  
-          },
-          error: (err) => {
-            this.registerEvent.emit({
-              success: false,
-              message: err.error?.error || `Erro ao atualizar o cadastro do usuário: ${err.message}`
-            });
-          }
-        });
-      }
-
-      this.userId = this.auth.getUserId();
-      this.userRole = this.auth.getUserRole();
+      },
+      error: (err) => this.handleMessage(false, 'Erro ao carregar dados.')
     });
   }
 
-  onChange() {
-    this.roleRadio == 'paciente' ? this.isCheckedPsicologo = false : this.isCheckedPsicologo = true;
+  onSubmit() {
+    if (this.form.invalid || !this.userId) return;
+
+    const rawValue = this.form.value;
+    const dataToSave = {
+      ...rawValue,
+      endereco: `${rawValue.endereco}, ${rawValue.cidade}, ${rawValue.estado}, ${rawValue.cep}`
+    };
+
+    this.userService.updateUserById(this.userId, dataToSave).subscribe({
+      next: () => this.handleMessage(true, 'Perfil atualizado com sucesso!'),
+      error: (err) => this.handleMessage(false, 'Erro ao atualizar perfil.')
+    });
   }
 
-  getUserFormData(userId: string): Observable<any> {
-    return this.userService.getUserById(userId);
+  onDelete() {
+    if (!this.userId || !confirm('Tem certeza que deseja excluir sua conta?')) return;
+
+    this.userService.deleteUserById(this.userId).subscribe({
+      next: () => {
+        this.handleMessage(true, 'Conta excluída. Saindo...');
+        setTimeout(() => this.auth.logout(), 2000);
+      },
+      error: () => this.handleMessage(false, 'Erro ao excluir conta.')
+    });
   }
 
-  deleteUser(userId: string): Observable<any> {
-    return this.userService.deleteUserById(userId);
+  private handleMessage(success: boolean, message: string) {
+    this.registerEvent.emit({ success, message });
   }
 }
