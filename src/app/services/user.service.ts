@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
@@ -7,47 +7,32 @@ import { AuthService } from '../auth/auth.service';
   providedIn: 'root'
 })
 export class UserService {
-  
-  error: string | null = null;
-  success: boolean = false;
-  private USER_URL = "http://localhost:3000/api/users"
+  private readonly API = "http://localhost:3000/api/users";
+  private http = inject(HttpClient);
+  private auth = inject(AuthService);
 
-  constructor(private auth: AuthService, private http: HttpClient) {}
+  getPsicologos(): Observable<any[]> {
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+
+    // Certifique-se que a URL é exatamente esta (plural 'users' e 'psicologos')
+    return this.http.get<any[]>("http://localhost:3000/api/users/psicologos", { headers });
+  }
 
   getUserById(userId: string): Observable<any> {
-    const token = this.auth.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
-  
-    return this.http.get(`${this.USER_URL}?id=${userId}`, { headers });
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${this.auth.getToken()}` });
+    return this.http.get(`${this.API}/${userId}`, { headers });
   }
 
-  getUserByName(userNome: string): Observable<any> {
-    const token = this.auth.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
-  
-    return this.http.get(`${this.USER_URL}?nome=${userNome}`, { headers });
-  }
-
+  // REINSTALANDO MÉTODO: Erro TS2339 (updateUserById)
   updateUserById(userId: string, data: any): Observable<any> {
-    const token = this.auth.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-  
-    return this.http.put(`${this.USER_URL}/${userId}`, data, { headers });
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${this.auth.getToken()}` });
+    return this.http.put(`${this.API}/${userId}`, data, { headers });
   }
 
+  // REINSTALANDO MÉTODO: Erro TS2551 (deleteUserById)
   deleteUserById(userId: string): Observable<any> {
-    const token = this.auth.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-  
-    return this.http.delete(`${this.USER_URL}/${userId}`, { headers });
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${this.auth.getToken()}` });
+    return this.http.delete(`${this.API}/${userId}`, { headers });
   }
 }

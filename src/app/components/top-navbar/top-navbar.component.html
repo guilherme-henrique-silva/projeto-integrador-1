@@ -10,7 +10,7 @@
 
     <div class="collapse navbar-collapse" id="navContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-1">
-        @for(item of navItems; track item.label) {
+        @for(item of filteredNavItems; track item.label) {
           <li class="nav-item">
             <a class="nav-link custom-link" 
                (click)="navigateTo(item.route)" 
@@ -35,13 +35,16 @@
           
           <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 animate slideIn">
             <div class="dropdown-header text-uppercase small fw-bold text-muted">Gerenciar Conta</div>
-            @for(item of dropdownItems; track item.label) {
-              <li>
-                <a class="dropdown-item py-2 d-flex align-items-center gap-2" (click)="navigateTo(item.route)">
-                  {{ item.label }}
-                </a>
-              </li>
-            }
+            <li>
+              <a class="dropdown-item py-2 d-flex align-items-center gap-2" (click)="navigateTo('/perfil')">
+                Ver Perfil
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item py-2 d-flex align-items-center gap-2" (click)="navigateTo('/configuracoes')">
+                Configurações
+              </a>
+            </li>
             <li><hr class="dropdown-divider opacity-50"></li>
             <li>
               <a class="dropdown-item logout-link py-2 d-flex align-items-center gap-2" (click)="logout()">

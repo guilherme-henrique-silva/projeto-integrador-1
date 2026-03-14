@@ -1,28 +1,81 @@
 .dashboard-container {
-    min-height: 80vh;
-    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 90vh;
+    background-color: #f8fafc;
+    background-image: radial-gradient(#e2e8f0 0.5px, transparent 0.5px);
+    background-size: 24px 24px; /* Pontilhado sutil de fundo */
 }
 
-.icon-box {
-    width: 48px;
-    height: 48px;
+.badge-role {
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Estilo dos Cards de Ação */
+.action-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+}
+
+.action-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    border-color: #3b82f6;
+}
+
+.icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 12px;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.main-card {
-    border-left: 6px solid #0d6efd; /* Linha lateral para dar destaque */
+.action-card h4 {
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
 }
 
-/* Efeito de Hover nos botões secundários */
-.btn-outline-primary:hover {
-    transform: translateY(-2px);
-    transition: all 0.2s ease;
+.action-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
 }
 
-/* Ajuste para o Badge */
-.bg-primary-subtle {
-    background-color: #e7f1ff !important;
+.action-link {
+    color: #3b82f6;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.border-dashed {
+    border-style: dashed !important;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.animate-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }

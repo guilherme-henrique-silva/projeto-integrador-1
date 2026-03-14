@@ -24,7 +24,7 @@ export class PerfilFormComponent implements OnInit {
     private userService: UserService
   ) {
     this.userId = this.auth.getUserId();
-    
+
     // Inicialização do Formulário com Validações
     this.form = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -50,7 +50,7 @@ export class PerfilFormComponent implements OnInit {
     this.userService.getUserById(this.userId).subscribe({
       next: (data) => {
         const parts = data.endereco?.split(',') || [];
-        
+
         // patchValue preenche o formulário de uma vez
         this.form.patchValue({
           ...data,
@@ -60,7 +60,7 @@ export class PerfilFormComponent implements OnInit {
           cep: parts[3]?.trim()
         });
       },
-      error: (err) => this.handleMessage(false, 'Erro ao carregar dados.')
+      error: (err: any) => this.handleMessage(false, 'Erro ao atualizar perfil')
     });
   }
 

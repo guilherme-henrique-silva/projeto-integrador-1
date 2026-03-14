@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { CommonModule } from '@angular/common';
@@ -11,30 +11,33 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./top-navbar.component.css']
 })
 export class TopNavbarComponent {
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
-  navItems = [
-    { label: 'Consultas', route: '/consultas' },
-    { label: 'Progresso', route: '/progresso' },
-    { label: 'Avaliações', route: '/avaliacoes' }
-  ];
+  // O getter que o HTML consome
+  get filteredNavItems() {
+    const role = this.auth.getUserRole();
+    
+    const allItems = [
+      { label: 'Consultas', route: '/consultas', roles: ['paciente', 'psicologo'] },
+      { label: 'Meu Progresso', route: '/progresso', roles: ['paciente'] },
+      { label: 'Avaliações', route: '/avaliacoes', roles: ['paciente', 'psicologo'] },
+      { label: 'Nova Avaliação', route: '/nova-avaliacao', roles: ['psicologo'] }
+    ];
 
-  dropdownItems = [
-    { label: 'Ver Perfil', route: '/perfil' },
-    { label: 'Configurações', route: '/configuracoes' }
-  ];
-
-  constructor(private auth: AuthService, private router: Router) {}
-  
-  navigateTo(route: string) {
-    this.router.navigate([route]);
+    // Se o role for nulo, retorna lista vazia por segurança
+    return allItems.filter(item => item.roles.includes(role || ''));
   }
 
-  logout() {
-    this.auth.logout();
-    this.router.navigate(['/welcome']);
+  getUserNome() { 
+    return this.auth.getUserNome() || 'Usuário'; 
   }
 
-  getUserNome(): string {
-    return this.auth.getUserNome() || 'Usuário';
+  navigateTo(route: string) { 
+    this.router.navigate([route]); 
+  }
+
+  logout() { 
+    this.auth.logout(); 
   }
 }

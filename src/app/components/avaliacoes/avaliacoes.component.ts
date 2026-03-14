@@ -52,4 +52,10 @@ export class AvaliacoesComponent implements OnInit {
   visualizar(id: number | undefined) {
     if (id) this.router.navigate(['/avaliacao', id]);
   }
+  getRiscoClass(risco: string | undefined): string {
+  const r = risco?.toLowerCase();
+  if (r === 'grave') return 'bg-danger-subtle';
+  if (r === 'moderado') return 'bg-warning-subtle';
+  return 'bg-success-subtle'; // Leve ou default
+}
 }

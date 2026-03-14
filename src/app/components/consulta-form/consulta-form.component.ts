@@ -1,43 +1,46 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { switchMap } from 'rxjs';
 import { ConsultaService } from '../../services/consulta.service';
 import { UserService } from '../../services/user.service';
-import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-consulta-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './consulta-form.component.html',
-  styleUrl: './consulta-form.component.css'
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './consulta-form.component.html'
 })
 export class ConsultaFormComponent implements OnInit {
   @Output() registerEvent = new EventEmitter<{ success: boolean; message: string }>();
 
+  private fb = inject(FormBuilder);
+  private consultaService = inject(ConsultaService);
+  private userService = inject(UserService);
+
   consultaForm!: FormGroup;
+  psicologos: any[] = [];
   isSubmitting = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private consultaService: ConsultaService,
-    private userService: UserService,
-    private router: Router
-  ) {}
-
   ngOnInit(): void {
-    this.initForm();
-  }
-
-  private initForm(): void {
+    this.carregarPsicologos();
+    
+    // Inicialização correta batendo com o formControlName do HTML
     this.consultaForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(3)]],
+      psicologoId: ['', Validators.required],
       data: ['', Validators.required],
       hora: ['', Validators.required],
       observacoes: ['']
+    });
+  }
+
+  carregarPsicologos() {
+    this.userService.getPsicologos().subscribe({
+      next: (data) => {
+        this.psicologos = data;
+      },
+      error: (err) => {
+        console.error('Erro ao listar psicólogos', err);
+      }
     });
   }
 
@@ -48,31 +51,25 @@ export class ConsultaFormComponent implements OnInit {
     }
 
     this.isSubmitting = true;
-    const { nome, data, hora, observacoes } = this.consultaForm.value;
-    const dataCompleta = `${data}T${hora}:00`;
+    const { psicologoId, data, hora, observacoes } = this.consultaForm.value;
 
-    // Fluxo: Busca ID do paciente -> Salva Consulta
-    this.userService.getUserByName(nome).pipe(
-      switchMap((pacienteData) => {
-        const payload = {
-          data: dataCompleta,
-          observacoes: observacoes,
-          paciente_id: pacienteData.id
-        };
-        return this.consultaService.addConsulta(payload);
-      })
-    ).subscribe({
+    // Formata a data para o padrão ISO que o Sequelize/MySQL espera
+    const payload = {
+      data: `${data}T${hora}:00`,
+      observacoes: observacoes,
+      psicologo_id: Number(psicologoId) 
+    };
+
+    this.consultaService.addConsulta(payload).subscribe({
       next: () => {
         this.registerEvent.emit({ success: true, message: 'Consulta agendada com sucesso!' });
         this.consultaForm.reset();
         this.isSubmitting = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.isSubmitting = false;
-        this.registerEvent.emit({
-          success: false,
-          message: err.error?.message || 'Erro ao processar agendamento.'
-        });
+        console.error('Erro no agendamento:', err);
+        this.registerEvent.emit({ success: false, message: 'Erro ao agendar consulta. Tente novamente.' });
       }
     });
   }

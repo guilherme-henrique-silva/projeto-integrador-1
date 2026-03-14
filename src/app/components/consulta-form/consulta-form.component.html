@@ -1,14 +1,17 @@
 <form [formGroup]="consultaForm" (ngSubmit)="onSubmit()" class="row g-3">
   
   <div class="col-md-12">
-    <label class="form-label fw-semibold">Nome do Paciente</label>
-    <input 
-      type="text" 
-      class="form-control" 
-      placeholder="Digite o nome completo"
-      formControlName="nome"
-      [ngClass]="{'is-invalid': consultaForm.get('nome')?.touched && consultaForm.get('nome')?.invalid}">
-    <div class="invalid-feedback">O nome é obrigatório (mín. 3 caracteres).</div>
+    <label class="form-label fw-semibold">Selecione o Psicólogo</label>
+    <select 
+      class="form-select" 
+      formControlName="psicologoId"
+      [ngClass]="{'is-invalid': consultaForm.get('psicologoId')?.touched && consultaForm.get('psicologoId')?.invalid}">
+      <option value="">Escolha um profissional disponível...</option>
+      @for (psic of psicologos; track psic.id) {
+        <option [value]="psic.id">{{ psic.nome }}</option>
+      }
+    </select>
+    <div class="invalid-feedback">A escolha de um profissional é obrigatória.</div>
   </div>
 
   <div class="col-md-6">
@@ -36,16 +39,16 @@
     <textarea 
       class="form-control" 
       rows="3" 
-      placeholder="Detalhes adicionais sobre a queixa ou encaminhamento..."
+      placeholder="Detalhes adicionais sobre a queixa ou motivo da consulta..."
       formControlName="observacoes"></textarea>
   </div>
 
   <div class="col-12 mt-4 d-flex gap-2">
-    <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" [disabled]="isSubmitting">
+    <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" [disabled]="isSubmitting || consultaForm.invalid">
       @if (isSubmitting) {
-        <span class="spinner-border spinner-border-sm me-2"></span>Salvando...
+        <span class="spinner-border spinner-border-sm me-2"></span>Agendando...
       } @else {
-        <i class="bi bi-check-lg me-2"></i>Agendar Consulta
+        <i class="bi bi-calendar-check me-2"></i>Confirmar Agendamento
       }
     </button>
   </div>

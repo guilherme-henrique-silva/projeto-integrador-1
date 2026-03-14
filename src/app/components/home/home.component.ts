@@ -7,7 +7,7 @@ import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TopNavbarComponent, CommonModule],
+  imports: [CommonModule], // Removi o TopNavbarComponent daqui
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
