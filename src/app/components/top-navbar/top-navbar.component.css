@@ -1,114 +1,129 @@
-/* Fundo em Azul Mentalize com degradê sutil */
-.bg-primary-gradient {
-    background: linear-gradient(90deg, #0d6efd 0%, #0a58ca 100%);
+:root {
+  --nav-height: 70px;
+  --accent-color: #0dcaf0;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
 }
 
 .navbar {
-    padding: 0.7rem 0;
-    transition: all 0.3s ease;
+  height: var(--nav-height);
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efeito de Scroll (opcional via JS) */
+.navbar.scrolled {
+  height: 60px;
+  background: rgba(13, 110, 253, 0.95);
 }
 
 .navbar-brand {
-    letter-spacing: -1.5px;
-    cursor: pointer;
-    color: #ffffff !important;
+  font-weight: 800 !important;
+  letter-spacing: -1px;
+  position: relative;
 }
 
 .brand-dot {
-    color: #0dcaf0; /* Ciano para o ponto final */
+  color: var(--accent-color);
+  text-shadow: 0 0 15px rgba(13, 202, 240, 0.5);
 }
 
-/* Links Customizados */
+/* Links de Navegação Modernos */
 .custom-link {
-    color: rgba(255, 255, 255, 0.75) !important;
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: 0.5rem 1rem !important;
-    border-radius: 8px;
-    transition: all 0.2s;
-    cursor: pointer;
+  position: relative;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  padding: 0.5rem 1.2rem !important;
+  transition: all 0.3s ease;
 }
 
 .custom-link:hover {
-    color: #ffffff !important;
-    background: rgba(255, 255, 255, 0.1);
+  color: #fff !important;
+  transform: translateY(-1px);
 }
 
+/* Indicador de Link Ativo */
 .active-link {
-    color: #ffffff !important;
-    background: rgba(255, 255, 255, 0.15) !important;
-    font-weight: 700 !important;
+  color: #fff !important;
+  font-weight: 600 !important;
 }
 
-/* Trigger do Perfil */
+.active-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Gatilho do Perfil Estilizado */
 .profile-trigger {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 6px 14px;
-    border-radius: 50px;
-    transition: all 0.3s;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 5px 5px 5px 15px;
+  border-radius: 30px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .profile-trigger:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.user-greeting {
-    font-size: 0.7rem;
-    line-height: 1;
-    margin-bottom: 2px;
-}
-
-.user-name {
-    font-size: 0.9rem;
-    line-height: 1;
-}
-
-/* Avatar Estilizado */
 .avatar-box {
-    width: 34px;
-    height: 34px;
-    background: #ffffff;
-    color: #0d6efd;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #fff 0%, #f0f9ff 100%);
+  color: #0d6efd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border: 2px solid transparent;
+  transition: transform 0.3s ease;
 }
 
-/* Menu Dropdown */
+.profile-trigger:hover .avatar-box {
+  transform: scale(1.05) rotate(5deg);
+}
+
+/* Dropdown Premium */
 .dropdown-menu {
-    border-radius: 12px;
-    padding: 8px;
-    margin-top: 12px !important;
-    min-width: 210px;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 15px !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .dropdown-item {
-    border-radius: 8px;
-    padding: 10px 15px;
-    font-weight: 500;
-    color: #4b5563;
+  border-radius: 10px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #475569;
 }
 
 .dropdown-item:hover {
-    background-color: #f3f4f6;
-    color: #0d6efd;
-}
-
-.logout-link {
-    color: #dc3545 !important;
-}
-
-.logout-link:hover {
-    background-color: #fef2f2 !important;
-}
-
-/* Cursor pointer para tudo que é clicável */
-.nav-link, .dropdown-item, .navbar-brand, .profile-trigger {
-    cursor: pointer;
+  background: #f1f5f9;
+  color: #0d6efd;
+  padding-left: 20px; /* Efeito de deslize */
 }

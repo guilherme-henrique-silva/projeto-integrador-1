@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,12 @@ import { CommonModule } from '@angular/common';
 export class TopNavbarComponent {
   private auth = inject(AuthService);
   private router = inject(Router);
+  isScrolled = false;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 20;
+  }
 
   // O getter que o HTML consome
   get filteredNavItems() {
