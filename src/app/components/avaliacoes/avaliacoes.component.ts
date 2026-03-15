@@ -1,61 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms'; // Importante para o search
 import { AuthService } from '../../auth/auth.service';
-import { AvaliacaoService, Avaliacao } from '../../services/avaliacao.service'; 
+import { AvaliacaoService, Avaliacao } from '../../services/avaliacao.service';
+import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
 
 @Component({
   selector: 'app-avaliacoes',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, TopNavbarComponent, FormsModule],
   templateUrl: './avaliacoes.component.html',
   styleUrl: './avaliacoes.component.css'
 })
 export class AvaliacoesComponent implements OnInit {
+  private auth = inject(AuthService);
+  private avaliacaoService = inject(AvaliacaoService);
+  public router = inject(Router);
 
-  userId: string | null;
-  userRole: string | null;
+  userRole: string | null = null;
   avaliacoesPaciente: Avaliacao[] = [];
   isLoading = true;
-
-  // Alterado de private para public para o HTML conseguir enxergar
-  constructor(
-    private auth: AuthService, 
-    private avaliacaoService: AvaliacaoService,
-    public router: Router 
-  ) {
-    this.userId = this.auth.getUserId();
-    this.userRole = this.auth.getUserRole();
-  }
+  filtroTexto: string = ''; // Texto da busca
 
   ngOnInit(): void {
+    this.userRole = this.auth.getUserRole();
     this.carregarDados();
   }
 
   carregarDados(): void {
-    if (this.userId) {
-      this.avaliacaoService.listarPorPaciente(this.userId).subscribe({
-        next: (dados) => {
-          this.avaliacoesPaciente = dados;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Erro ao buscar avaliações:', err);
-          this.isLoading = false;
-        }
-      });
-    } else {
-      this.isLoading = false;
-    }
+    this.isLoading = true;
+    this.avaliacaoService.listarPorPaciente('me').subscribe({
+      next: (dados) => {
+        this.avaliacoesPaciente = dados;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar avaliações:', err);
+        this.isLoading = false;
+      }
+    });
   }
 
-  visualizar(id: number | undefined) {
-    if (id) this.router.navigate(['/avaliacao', id]);
+  // Lógica de Filtro Reativo
+  get avaliacoesFiltradas() {
+    if (!this.filtroTexto) {
+      return this.avaliacoesPaciente;
+    }
+    const termo = this.filtroTexto.toLowerCase();
+    return this.avaliacoesPaciente.filter(av => 
+      av.descricao?.toLowerCase().includes(termo) || 
+      av.paciente?.nome?.toLowerCase().includes(termo) ||
+      av.cid?.toLowerCase().includes(termo) ||
+      av.risco?.toLowerCase().includes(termo)
+    );
   }
+
   getRiscoClass(risco: string | undefined): string {
-  const r = risco?.toLowerCase();
-  if (r === 'grave') return 'bg-danger-subtle';
-  if (r === 'moderado') return 'bg-warning-subtle';
-  return 'bg-success-subtle'; // Leve ou default
-}
+    const r = risco?.toLowerCase();
+    if (r === 'grave') return 'bg-danger text-danger bg-opacity-10';
+    if (r === 'moderado') return 'bg-warning text-warning bg-opacity-10';
+    return 'bg-success text-success bg-opacity-10';
+  }
 }

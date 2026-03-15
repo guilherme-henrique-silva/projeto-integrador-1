@@ -66,4 +66,18 @@ export class ConsultasComponent implements OnInit {
   getPacienteNome(c: Consulta): string {
     return c.paciente?.nome || 'Não informado';
   }
+  atualizarStatus(id: number, novoStatus: string) {
+    this.consultaService.updateStatus(id, novoStatus).subscribe({
+      next: () => {
+        // Atualiza a lista localmente para não precisar recarregar a página
+        const index = this.consultas.findIndex(c => c.id === id);
+        if (index !== -1) {
+          this.consultas[index].status = novoStatus;
+        }
+        this.alertMessage = `Consulta marcada como ${novoStatus}!`;
+        setTimeout(() => this.alertMessage = null, 3000);
+      },
+      error: (err) => console.error('Erro ao atualizar status', err)
+    });
+  }
 }

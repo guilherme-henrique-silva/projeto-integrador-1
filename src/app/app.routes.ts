@@ -14,6 +14,7 @@ import { AvaliacaoComponent } from './components/avaliacao/avaliacao.component';
 import { ProgressoComponent } from './components/progresso/progresso.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AvaliacaoFormComponent } from './components/avaliacao-form/avaliacao-form.component';
+import { AvaliacaoDetalheComponent } from './components/avaliacao-detalhe/avaliacao-detalhe.component';
 
 export const routes: Routes = [
   // 1. Área Pública
@@ -37,7 +38,7 @@ export const routes: Routes = [
 
   // 5. Relatórios e Evolução
   { path: 'progresso', component: ProgressoComponent, canActivate: [AuthGuard] },
-
+  { path: 'avaliacao/:id', component: AvaliacaoDetalheComponent, canActivate: [AuthGuard] },
   // 6. Tratamento de Erros
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }
