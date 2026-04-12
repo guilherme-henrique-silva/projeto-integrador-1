@@ -28,7 +28,7 @@ export class TopNavbarComponent {
       { label: 'Consultas', route: '/consultas', roles: ['paciente', 'psicologo'] },
       { label: 'Meu Progresso', route: '/progresso', roles: ['paciente'] },
       { label: 'Avaliações', route: '/avaliacoes', roles: ['paciente', 'psicologo'] },
-      { label: 'Nova Avaliação', route: '/nova-avaliacao', roles: ['psicologo'] }
+      { label: 'Progresso dos Pacientes', route: '/progresso', roles: ['psicologo'] }
     ];
 
     // Se o role for nulo, retorna lista vazia por segurança

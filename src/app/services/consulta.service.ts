@@ -24,6 +24,11 @@ export class ConsultaService {
     return this.http.get<Consulta[]>(this.API, { headers });
   }
 
+  updateStatus(id: number, status: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${this.auth.getToken()}` });
+    return this.http.put(`${this.API}/${id}/status`, { status }, { headers });
+  }
+
   // Corrigido: Agora aceita o payload flexível e usa os headers corretamente
   addConsulta(payload: { 
     data: string; 

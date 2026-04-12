@@ -1,0 +1,55 @@
+<app-top-navbar></app-top-navbar>
+
+<div class="container py-5 mt-5">
+  <div class="d-flex align-items-center mb-4">
+    <button class="btn btn-light rounded-circle me-3" (click)="goBack()">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    <h2 class="fw-bold m-0">Detalhes da Avaliação Clínica</h2>
+  </div>
+
+  @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  } @else if (avaliacao) {
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-4 p-4 mb-4">
+          <h5 class="text-primary fw-bold mb-3">Descrição do Quadro</h5>
+          <p class="text-dark fs-5 lead">{{ avaliacao.descricao }}</p>
+          
+          <hr class="my-4 opacity-25">
+          
+          <h5 class="text-primary fw-bold mb-3">Observações Terapêuticas</h5>
+          <div class="bg-light p-3 rounded-3 italic">
+            "{{ avaliacao.observacoes }}"
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card shadow-sm border-0 rounded-4 p-4 bg-primary text-white">
+          <h5 class="fw-bold mb-4">Resumo Clínico</h5>
+          
+          <div class="mb-3">
+            <small class="d-block opacity-75">Nível de Bem-estar</small>
+            <span class="fs-4 fw-bold">{{ avaliacao.pontuacao }}/10</span>
+          </div>
+
+          <div class="mb-3">
+            <small class="d-block opacity-75">CID Relacionado</small>
+            <span class="badge bg-white text-primary fs-6">{{ avaliacao.cid || 'Não informado' }}</span>
+          </div>
+
+          <div class="mb-0">
+            <small class="d-block opacity-75">Data do Registro</small>
+            <span>{{ avaliacao.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="alert alert-warning">Avaliação não encontrada.</div>
+  }
+</div>
