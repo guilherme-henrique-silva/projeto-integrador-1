@@ -1,17 +1,81 @@
-<app-top-navbar></app-top-navbar>
-<div class="container py-4">
-  <div class="card shadow-sm rounded p-4">
-    <h2 class="mb-3">Bem-vindo à plataforma de saúde mental Mentalize!</h2>
-    <p class="lead">Olá, {{ userNome }}! Você está utilizando os nossos serviços como <strong>{{ userRole }}</strong>.</p>
+<main class="dashboard-container">
+  <div class="container py-5">
+    
+    <section class="welcome-hero mb-5 animate-in">
+      <div class="row align-items-center">
+        <div class="col-md-12">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge-role">
+              <i class="bi bi-shield-check me-1"></i> {{ userRole | titlecase }}
+            </span>
+          </div>
+          <h1 class="display-5 fw-bold text-dark">{{ saudacao }}, <span class="text-primary">{{ userNome }}</span>!</h1>
+          <p class="text-muted fs-5">Bem-vindo ao seu espaço de saúde mental.</p>
+        </div>
+      </div>
+    </section>
 
-    @if(userRole == 'paciente') {
-        <div>
-          <p>Explore nossos recursos para acompanhamento emocional e marque consultas com psicólogos.</p>
+    <div class="row g-4 animate-in" style="animation-delay: 0.1s">
+      
+      @if(userRole === 'paciente') {
+        <div class="col-md-6 col-lg-4">
+          <div class="action-card h-100" (click)="navigateTo('/create/consulta')">
+            <div class="icon-circle bg-primary-subtle text-primary">
+              <i class="bi bi-calendar-plus"></i>
+            </div>
+            <h4>Nova Consulta</h4>
+            <p>Agende um novo horário com seu terapeuta de preferência.</p>
+            <span class="action-link">Agendar agora <i class="bi bi-arrow-right"></i></span>
+          </div>
         </div>
-    } @else {
-        <div>
-          <p>Gerencie seus pacientes e acesse ferramentas clínicas para acompanhamento terapêutico.</p>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="action-card h-100" (click)="navigateTo('/progresso')">
+            <div class="icon-circle bg-success-subtle text-success">
+              <i class="bi bi-activity"></i> </div>
+            <h4>Meu Progresso</h4>
+            <p>Visualize sua evolução emocional através de gráficos detalhados.</p>
+            <span class="action-link">Ver relatório <i class="bi bi-arrow-right"></i></span>
+          </div>
         </div>
-    }
+      } 
+      
+      @else {
+        <div class="col-md-6 col-lg-4">
+          <div class="action-card h-100" (click)="navigateTo('/consultas')">
+            <div class="icon-circle bg-primary-subtle text-primary">
+              <i class="bi bi-people"></i>
+            </div>
+            <h4>Meus Pacientes</h4>
+            <p>Acesse prontuários, históricos e evoluções clínicas.</p>
+            <span class="action-link">Acessar lista <i class="bi bi-arrow-right"></i></span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="action-card h-100">
+            <div class="icon-circle bg-info-subtle text-info">
+              <i class="bi bi-calendar3"></i>
+            </div>
+            <h4>Agenda do Dia</h4>
+            <p>Confira seus horários e atendimentos confirmados para hoje.</p>
+            <span class="action-link">Ver agenda <i class="bi bi-arrow-right"></i></span>
+          </div>
+        </div>
+      }
+
+      <div class="col-md-6 col-lg-4">
+        <div class="action-card h-100 shadow-sm border-dashed">
+          <div class="icon-circle bg-light text-secondary">
+            <i class="bi bi-question-circle"></i>
+          </div>
+          <h4>Ajuda</h4>
+          <p>Dúvidas sobre o uso da plataforma Mentalize?</p>
+          <span class="action-link">Central de ajuda <i class="bi bi-arrow-right"></i></span>
+        </div>
+      </div>
+
+    </div>
+
   </div>
-</div>
+</main>

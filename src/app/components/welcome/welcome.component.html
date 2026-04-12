@@ -1,18 +1,43 @@
-<img src="/assets/welcome-fundo-abstrato-aquarela-azul.jpg" class="img-fluid z-n1 w-100 h-100 position-absolute top-0 start-0" alt="fundo-abstrato-aquarela-azul.jpg">
-<div class="container">
-  <h1 class="display-4 text-white fw-bold mt-5">Seja bem-vindo à Mentalize!</h1>
-  <p class="lead text-white fw-semibold">Esta é uma plataforma feita para facilitar o cuidado com a sua saúde mental e dos seus pacientes.</p>
-</div>
-<div class="container mt-5">
-  <div class="d-flex d-flex-row">
-    <img src="/assets/welcome-casal.png" class="img-fluid z-0 w-100 " alt="casal.png">
-    <div class="container w-50">
-      <hr class="my-4">
-      <div class="d-grid gap-3 col-6 mx-auto">
-          <p>Faça gratuitamente o seu cadastro ou acesse os nossos serviços se já é usuário.</p>
-          <button class="btn btn-primary" id="btnLogin" type="button" (click)="navigateTo('/login')">Entrar</button>
-          <button class="btn btn-outline-primary" id="btnSignin" type="button" (click)="navigateTo('/signin')">Cadastrar</button>
+<main class="hero-section d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      
+      <div class="col-lg-6">
+        <div class="badge rounded-pill bg-primary-subtle text-primary fw-bold px-3 py-2 mb-3">
+          Sua clínica em um só lugar
+        </div>
+        <h1 class="display-2 fw-bolder text-dark mb-4">
+          Gerencie sua saúde mental com <span class="text-primary">clareza.</span>
+        </h1>
+        <p class="fs-5 text-secondary mb-5 pe-lg-5">
+          A Mentalize é a ferramenta completa para psicólogos e pacientes. 
+          Agendamentos, históricos e acompanhamento clínico de forma segura e profissional.
+        </p>
+        
+        <div class="d-flex flex-column flex-sm-row gap-3">
+          <button class="btn btn-primary btn-lg px-4 py-3 fw-bold" (click)="navigateTo('/login')">
+            Acessar Plataforma
+          </button>
+          <button class="btn btn-outline-secondary btn-lg px-4 py-3 fw-bold" (click)="navigateTo('/signin')">
+            Criar conta grátis
+          </button>
+        </div>
+
+        <div class="mt-5 d-flex align-items-center gap-3 text-secondary small">
+          <div class="d-flex">
+             <span class="fw-bold text-dark">★★★★★</span>
+          </div>
+          <span>Mais de 1.000 profissionais já utilizam.</span>
+        </div>
       </div>
+
+      <div class="col-lg-6">
+        <div class="image-wrapper position-relative">
+          <div class="bg-pattern position-absolute"></div>
+          <img src="/assets/welcome-casal.png" class="img-fluid position-relative z-1" alt="Mentalize Platform">
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
+</main>

@@ -1,76 +1,72 @@
-import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
-import { FormsModule } from '@angular/forms';
-import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login-form',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.css'
+  styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent implements AfterViewInit {
-
+export class LoginFormComponent implements OnInit {
   @Output() registerEvent = new EventEmitter<{ success: boolean; message: string }>();
 
-  emailInput = '';
-  passwordInput = '';
-  
-  userId: string | null;
-  userRole: string | null;
+  loginForm: FormGroup;
+  isLoading = false;
 
-  constructor(private auth: AuthService, private login: LoginService, private router: Router) {
-    this.userId = this.auth.getUserId();
-    this.userRole = this.auth.getUserRole();
-    if(this.userId != null) {
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router
+  ) {
+    // Redireciona se já estiver logado
+    if (this.auth.getUserId()) {
       this.router.navigate(['/home']);
     }
-  }
 
-  ngAfterViewInit(): void {
-    const forms = document.querySelectorAll<HTMLFormElement>('.needs-validation');
-    const btnLogin = document.querySelector<HTMLFormElement>('#btnLogin');
-
-    forms.forEach((form) => {
-      form.addEventListener('submit', (event) => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
+    // Inicializa formulário com validações
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
-
-    addEventListener("submit", (event) => {
-      const data = {
-        username: this.emailInput,
-        password: this.passwordInput
-      }
-
-      this.auth.login(data).subscribe({
-        next: () => {
-          this.registerEvent.emit({
-            success: true,
-            message: 'Login realizado com sucesso!'
-          });
-
-        },
-        error: (err) => {
-          this.registerEvent.emit({
-            success: false,
-            message: err.error?.error || 'Erro ao realizar o login.'
-          });
-        }
-      });
-      
-      this.userId = this.auth.getUserId();
-      this.userRole = this.auth.getUserRole();
-      setTimeout(() => {
-        this.router.navigate(['/home']);
-      }, 3000);
-    })
   }
 
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    if (this.loginForm.invalid) return;
+
+    this.isLoading = true;
+    const credentials = this.loginForm.value;
+
+    this.auth.login(credentials).subscribe({
+      next: (res) => {
+        this.registerEvent.emit({
+          success: true,
+          message: 'Login realizado com sucesso!'
+        });
+        // Navega imediatamente após o sucesso
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.registerEvent.emit({
+          success: false,
+          message: err.error?.error || 'E-mail ou senha incorretos.'
+        });
+      }
+    });
+  }
+
+  isFieldInvalid(field: string): boolean {
+    const control = this.loginForm.get(field);
+    return !!(control && control.invalid && (control.touched || control.dirty));
+  }
+
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
+  }
 }

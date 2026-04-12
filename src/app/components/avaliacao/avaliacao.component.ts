@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AvaliacaoFormComponent } from '../avaliacao-form/avaliacao-form.component';
-import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
 
 @Component({
   selector: 'app-avaliacao',
-  imports: [TopNavbarComponent, AvaliacaoFormComponent],
+  standalone: true,
+  // A Navbar não entra aqui pois já é global no app.component
+  imports: [CommonModule, AvaliacaoFormComponent],
   templateUrl: './avaliacao.component.html',
   styleUrl: './avaliacao.component.css'
 })
 export class AvaliacaoComponent {
-
+  // Este componente agora serve como um "Container" organizado para o formulário
 }

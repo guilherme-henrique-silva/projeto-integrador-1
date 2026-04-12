@@ -1,97 +1,92 @@
-<form class="needs-validation mt-4 mb-4" novalidate>
-  <div class="form-row row">
-    <div class="col-md-8 col">
-      <label for="inputNome">Nome</label>
-      <input [(ngModel)]="nomeInput" type="text" class="form-control" id="inputNome" name="nome" placeholder="Nome completo" required>
-      <div class="invalid-feedback">Nome inválido</div>
-    </div>
-    <div class="col-md-2 col">
-      <label for="inputTelefone">Telefone</label>
-      <input [(ngModel)]="telefoneInput" type="text" class="form-control" id="inputTelefone" name="telefone" placeholder="18987654321" required>
-      <div class="invalid-feedback">Telefone inválido</div>
-    </div>
+<div class="card shadow-lg border-0 p-4 bg-white rounded-4">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-primary">Crie sua conta</h2>
+    <p class="text-muted">Junte-se à Mentalize e comece seu acompanhamento.</p>
   </div>
-  <div class="form-row row">
-    <div class="col-md-4 col">
-      <label for="inputEmail">Email</label>
-      <input [(ngModel)]="emailInput" type="email" class="form-control" id="inputEmail" name="email" placeholder="name@example.com" required>
-      <div class="invalid-feedback">Email inválido</div>
-    </div>
-    <div class="col-md-4 col">
-      <label for="inputPassword">Senha</label>
-      <input [(ngModel)]="passwordInput" type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="inputPassword" name="password" placeholder="********" aria-describedby="passwordHelpBlock" required>
-      <div class="invalid-feedback">Senha inválida</div>
-      <div id="passwordHelpBlock" class="form-text">
-        A senha deve conter 8-20 caracteres, letras e números, não conter espaços, caracteres especiais ou emoji.
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label fw-semibold">Nome Completo</label>
+        <input type="text" class="form-control" formControlName="nome" placeholder="Ex: Carlos Dario">
+        <div class="text-danger small" *ngIf="isFieldInvalid('nome')">Nome é obrigatório.</div>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Telefone</label>
+        <input type="text" class="form-control" formControlName="telefone" placeholder="18999999999">
       </div>
     </div>
-    <div class="col-md-4 col mt-4">
-      <div class="form-check form-check-inline">
-        <input [(ngModel)]="roleRadio" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioPaciente" value="paciente" (change)="onChange()" required>
-        <label class="form-check-label" for="inlineRadioPaciente">Paciente</label>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">E-mail</label>
+        <input type="email" class="form-control" formControlName="username" placeholder="seu@email.com">
+        <div class="text-danger small" *ngIf="isFieldInvalid('username')">E-mail inválido.</div>
       </div>
-      <div class="form-check form-check-inline">
-        <input [(ngModel)]="roleRadio" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioPsicologo" value="psicologo" (change)="onChange()" required>
-        <label class="form-check-label" for="inlineRadioPsicologo">Psicólogo</label>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Senha</label>
+        <input type="password" class="form-control" formControlName="password" placeholder="********">
+        <div class="form-text small">Mínimo 8 caracteres (A-z e 0-9).</div>
       </div>
-      @if(isCheckedPsicologo) {
-        <div class="col-md-4 col">
-          <label for="inputCRP">CRP</label>
-          <input [(ngModel)]="crpInput" type="text" pattern="[0-9]{7}" class="form-control" id="inputCRP" name="crp" required>
-          <div class="invalid-feedback">CRP inválido</div>
+    </div>
+
+    <div class="row g-3 mt-1 align-items-center">
+      <div class="col-md-6">
+        <label class="form-label d-block fw-semibold">Eu sou:</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" formControlName="role" id="roleP" value="paciente">
+          <label class="form-check-label" for="roleP">Paciente</label>
         </div>
-      }
-      <div class="invalid-feedback">
-        Você deve selecionar paciente/psicólogo.
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" formControlName="role" id="rolePs" value="psicologo">
+          <label class="form-check-label" for="rolePs">Psicólogo</label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="form.get('role')?.value === 'psicologo'">
+        <label class="form-label fw-semibold">CRP</label>
+        <input type="text" class="form-control" formControlName="crp" placeholder="0000000">
       </div>
     </div>
-  </div>
 
-  <div class="form-row row">
-    <div class="col-md-4 col">
-      <label for="inputAddress">Endereço</label>
-      <input [(ngModel)]="enderecoInput" type="text" class="form-control" id="inputAddress" name="endereco" placeholder="123 Main St" required>
-      <div class="invalid-feedback">Endereço inválido</div>
-    </div>
-    <div class="col-md-2 col">
-        <label for="inputCity">Cidade</label>
-        <input [(ngModel)]="cidadeInput" type="text" class="form-control" id="inputCity" name="cidade" required>
-        <div class="invalid-feedback">Cidade inválida</div>
-    </div>
-    <div class="col-md-2 col">
-        <label for="inputState">Estado</label>
-        <select [(ngModel)]="estadoSelect" id="inputState" name="estado" class="form-control" required>
-          @for(estado of estadosItems; track estado) {
-              @if(estado == 'SP') {
-                  <option selected>{{ estado }}</option>
-              } @else {
-                  <option>{{ estado }}</option>
-              }
-          }
+    <hr class="my-4">
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Endereço</label>
+        <input type="text" class="form-control" formControlName="endereco" placeholder="Rua, Número, Bairro">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Cidade</label>
+        <input type="text" class="form-control" formControlName="cidade">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Estado</label>
+        <select class="form-select" formControlName="estado">
+          <option *ngFor="let uf of estadosItems" [value]="uf">{{ uf }}</option>
         </select>
-        <div class="invalid-feedback">Estado inválido</div>
-    </div>
-    <div class="col-md-2 col">
-        <label for="inputZip">CEP</label>
-        <input [(ngModel)]="CEPInput" type="text" pattern="[0-9]{8}" class="form-control" id="inputZip" name="cep" required>
-        <div class="invalid-feedback">CEP inválido</div>
-    </div>
-  </div>
-
-  <div class="form-row row justify-content-md-center mt-4">
-    <div class="form-check col-md-4">
-      <input [(ngModel)]="checkboxInput" class="form-check-input" type="checkbox" id="gridCheck" name="checkbox" required>
-      <label class="form-check-label" for="gridCheck">
-        Eu li e concordo com os termos de uso
-      </label>
-      <div class="invalid-feedback">
-        Você deve concordar antes de prosseguir.
       </div>
     </div>
-  </div>
-  <div class="form-row row justify-content-md-center mt-4">
-    <div class="col-md-2">
-        <button type="submit" id="btnSignin" class="btn btn-primary">Cadastrar</button>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">CEP</label>
+        <input type="text" class="form-control" formControlName="cep" placeholder="00000000">
+      </div>
     </div>
-  </div>
-</form>
+
+    <div class="mt-4">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="termos" id="checkTermos">
+        <label class="form-check-label small" for="checkTermos">
+          Li e concordo com os termos de uso.
+        </label>
+      </div>
+    </div>
+
+    <div class="d-grid mt-4">
+      <button type="submit" class="btn btn-primary btn-lg fw-bold" [disabled]="form.invalid">
+        Finalizar Cadastro
+      </button>
+    </div>
+  </form>
+</div>

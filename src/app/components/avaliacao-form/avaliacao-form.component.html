@@ -1,42 +1,86 @@
-  <div class="form-group">
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-        <label class="form-check-label" for="inlineRadio1">1</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-        <label class="form-check-label" for="inlineRadio2">2</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-        <label class="form-check-label" for="inlineRadio3">3</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
-        <label class="form-check-label" for="inlineRadio4">4</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option5">
-        <label class="form-check-label" for="inlineRadio5">5</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option6">
-        <label class="form-check-label" for="inlineRadio6">6</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="option7">
-        <label class="form-check-label" for="inlineRadio7">7</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio8" value="option8">
-        <label class="form-check-label" for="inlineRadio8">8</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio9" value="option9">
-        <label class="form-check-label" for="inlineRadio9">9</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio10" value="option10">
-        <label class="form-check-label" for="inlineRadio10">10</label>
+<main class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+      <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5">
+        
+        <div class="text-center mb-4">
+          <i class="bi bi-clipboard2-pulse text-primary display-4"></i>
+          <h2 class="fw-bold mt-2">Avaliação Clínica</h2>
+        </div>
+
+        <form [formGroup]="formAvaliacao" (ngSubmit)="onSubmit()">
+          
+          @if (userRole === 'psicologo') {
+            <div class="row g-3 mb-4 bg-light p-3 rounded-4 border">
+              <div class="col-md-6">
+                <label class="form-label fw-bold small text-uppercase">Paciente</label>
+                <select class="form-select border-0 shadow-sm" formControlName="pacienteId">
+                  <option value="">Selecione...</option>
+                  @for (p of pacientes; track p.id) {
+                    <option [value]="p.id">{{ p.nome }}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-bold small text-uppercase">Vincular Sessão</label>
+                <select class="form-select border-0 shadow-sm" formControlName="consultaId">
+                  <option value="">Atendimento Avulso</option>
+                  @for (c of consultas; track c.id) {
+                    <option [value]="c.id">{{ c.data | date:'dd/MM HH:mm' }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+          }
+
+          <div class="mb-4 text-center">
+            <label class="form-label fw-bold d-block mb-3">Bem-estar emocional (1 a 10)</label>
+            <div class="d-flex justify-content-between">
+              @for (n of niveis; track n) {
+                <div class="form-check p-0">
+                  <input class="btn-check" type="radio" [id]="'nota' + n" [value]="n" formControlName="pontuacao">
+                  <label class="btn btn-outline-primary rounded-circle fw-bold d-flex align-items-center justify-content-center" 
+                         [for]="'nota' + n" style="width: 40px; height: 40px;">{{ n }}</label>
+                </div>
+              }
+            </div>
+          </div>
+
+          @if (userRole === 'psicologo') {
+            <div class="mb-4">
+              <label class="form-label fw-bold small text-uppercase">Classificação de Risco</label>
+              <select class="form-select border-0 shadow-sm bg-light" formControlName="risco">
+                <option value="Leve">🟢 Leve (Estável / Evolução Positiva)</option>
+                <option value="Moderado">🟡 Moderado (Atenção / Manutenção)</option>
+                <option value="Grave">🔴 Grave (Risco de Crise / Urgência)</option>
+              </select>
+            </div>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <label class="form-label fw-bold">CID</label>
+                <input type="text" class="form-control bg-light" formControlName="cid">
+              </div>
+              <div class="col-md-8">
+                <label class="form-label fw-bold">Descrição</label>
+                <input type="text" class="form-control bg-light" formControlName="descricao">
+              </div>
+            </div>
+          }
+
+          <div class="mb-4">
+            <label class="form-label fw-bold">Observações</label>
+            <textarea class="form-control bg-light" rows="4" formControlName="observacoes"></textarea>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold py-3" [disabled]="formAvaliacao.invalid || isSubmitting">
+              {{ isSubmitting ? 'Salvando...' : 'Confirmar Registro' }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+</main>

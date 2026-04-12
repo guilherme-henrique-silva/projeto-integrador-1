@@ -1,0 +1,45 @@
+.animate-in {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilo para as caixas de ícone padronizadas */
+.icon-box-sm {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* Container do gráfico para parecer um widget profissional */
+.chart-container {
+    background-color: #fcfcfd;
+}
+
+/* Itens de Recomendação Estilizados */
+.rec-item {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.rec-item.danger { background: #fef3f2; color: #b42318; border: 1px solid #fee2e2; }
+.rec-item.warning { background: #fffbeb; color: #b45309; border: 1px solid #fef3c7; }
+.rec-item.success { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
+
+/* Cores Subtis para Alertas */
+.bg-danger-subtle { background-color: #fef2f2 !important; border-color: #dc3545 !important; }
+.bg-warning-subtle { background-color: #fffbeb !important; border-color: #f59e0b !important; }
+.bg-success-subtle { background-color: #f0fdf4 !important; border-color: #198754 !important; }
+
+.italic { font-style: italic; }

@@ -1,22 +1,50 @@
-<form class="row g-3 needs-validation mt-4 mb-4" novalidate>
-    <div class="form-row row">
-      <div class="col-md-6 col">
-        <label for="emailInput">Email</label>
-        <input [(ngModel)]="emailInput" type="email" class="form-control" id="emailInput" name="email" placeholder="name@example.com" required>
-        <div class="invalid-feedback">Email inválido</div>
+<div class="card shadow-lg border-0 p-4 bg-white rounded-4 mx-auto" style="max-width: 450px;">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-primary">Bem-vindo de volta</h2>
+    <p class="text-muted">Acesse sua conta na Mentalize.</p>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">E-mail</label>
+      <input 
+        type="email" 
+        class="form-control form-control-lg" 
+        formControlName="username" 
+        placeholder="nome@exemplo.com"
+        [class.is-invalid]="isFieldInvalid('username')">
+      <div class="invalid-feedback">Por favor, insira um e-mail válido.</div>
+    </div>
+
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <label class="form-label fw-semibold">Senha</label>
+        <a (click)="navigateTo('/forgot-password')" class="text-primary small fw-bold text-decoration-none cursor-pointer">Esqueceu a senha?</a>
       </div>
+      <input 
+        type="password" 
+        class="form-control form-control-lg" 
+        formControlName="password" 
+        placeholder="********"
+        [class.is-invalid]="isFieldInvalid('password')">
+      <div class="invalid-feedback">Senha obrigatória.</div>
     </div>
-    <div class="form-row row">
-      <div class="col-md-6 col">
-        <label for="passwordInput">Senha</label>
-        <input [(ngModel)]="passwordInput" type="password" class="form-control" id="passwordInput" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="********" aria-describedby="passwordHelpBlock" required>
-        <div class="invalid-feedback">Senha inválida</div>
-        <div id="passwordHelpBlock" class="form-text">
-          A senha deve conter 8-20 caracteres, letras e números, não conter espaços, caracteres especiais ou emoji.
-        </div>
-      </div>
+
+    <div class="d-grid gap-2 mt-4">
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-lg fw-bold shadow-sm" 
+        [disabled]="loginForm.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
+      </button>
     </div>
-    <div class="col-12">
-        <button class="btn btn-primary" id="btnLogin" type="submit">Login</button>
+
+    <div class="text-center mt-4">
+      <p class="text-muted small">
+        Não tem uma conta? 
+        <a (click)="navigateTo('/signin')" class="text-primary fw-bold text-decoration-none cursor-pointer">Cadastre-se grátis</a>
+      </p>
     </div>
-</form>
+  </form>
+</div>

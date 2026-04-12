@@ -1,1 +1,15 @@
-<router-outlet />
+<div class="d-flex flex-column min-vh-100 bg-light">
+  
+  @if (isLoggedIn()) {
+    <app-top-navbar></app-top-navbar>
+  }
+
+  <main class="flex-grow-1" [style.padding-top]="isLoggedIn() ? '80px' : '0px'">
+    <router-outlet></router-outlet>
+  </main>
+
+  @if (isLoggedIn()) {
+    <app-footer></app-footer>
+  }
+
+</div>

@@ -1,0 +1,37 @@
+.signin-wrapper {
+    min-height: 100vh;
+    background-color: #f8fafc; /* Mesmo fundo do login para consistência */
+}
+
+/* Container de Alerta (Toast Style) */
+.alert-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1100;
+    min-width: 320px;
+}
+
+.alert {
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+}
+
+/* Animação de entrada lateral */
+.slideIn {
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Ajuste para o formulário não ficar "colado" no topo em telas pequenas */
+@media (max-width: 768px) {
+    .signin-wrapper {
+        align-items: flex-start !important;
+        padding-top: 20px;
+    }
+}

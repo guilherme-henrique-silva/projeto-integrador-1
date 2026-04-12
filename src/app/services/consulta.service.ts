@@ -1,64 +1,47 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http'; // Adicionado HttpHeaders
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth/auth.service'; // Certifique-se que o caminho está correto
 
 export interface Consulta {
   id: number;
   data: string;
   status: string;
   observacoes: string;
-  paciente: string;
-  psicologo: string;
+  paciente?: { id: number; nome: string }; 
+  psicologo?: { id: number; nome: string };
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ConsultaService {
-  
-  private apiUrl = 'http://localhost:3000/api/consultas';
-
-  constructor(private auth: AuthService, private http: HttpClient) { }
+  private readonly API = 'http://localhost:3000/api/consultas';
+  private http = inject(HttpClient);
+  private auth = inject(AuthService); // Injetando o AuthService para pegar o token
 
   getConsultas(): Observable<Consulta[]> {
     const token = this.auth.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
-    return this.http.get<Consulta[]>(this.apiUrl, { headers });
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    return this.http.get<Consulta[]>(this.API, { headers });
   }
 
-  getConsulta(id: number): Observable<Consulta> {
+  // Corrigido: Agora aceita o payload flexível e usa os headers corretamente
+  addConsulta(payload: { 
+    data: string; 
+    observacoes: string; 
+    paciente_id?: number;  
+    psicologo_id?: number; 
+  }): Observable<any> {
     const token = this.auth.getToken();
-    const headers = new HttpHeaders({
+    const headers = new HttpHeaders({ 
       'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json' 
     });
-    return this.http.get<Consulta>(`${this.apiUrl}/${id}`, { headers });
-  }
-
-  addConsulta(consulta: any): Observable<any> {
-    const token = this.auth.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
-    return this.http.post(this.apiUrl, consulta, { headers });
-  }
-
-  updateConsulta(id: number, consulta: Partial<Consulta>): Observable<Consulta> {
-    const token = this.auth.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
-    return this.http.put<Consulta>(`${this.apiUrl}/${id}`, consulta, { headers });
+    return this.http.post(this.API, payload, { headers });
   }
 
   deleteConsulta(id: number): Observable<any> {
     const token = this.auth.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers });
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    return this.http.delete(`${this.API}/${id}`, { headers });
   }
-
 }

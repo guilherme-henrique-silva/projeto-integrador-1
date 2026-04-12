@@ -1,92 +1,83 @@
+<div class="card shadow-sm border-0 p-4 bg-white rounded-4">
+  <h3 class="fw-bold mb-4 text-primary">Meu Perfil</h3>
 
-    <form class="needs-validation mt-4 mb-4" [formGroup]="form" novalidate>
-      <div class="form-row row">
-        <div class="col-md-8 col">
-          <label for="inputNome">Nome</label>
-          <input [(ngModel)]="nomeInput" type="text" class="form-control" formControlName="nome" id="inputNome" name="nome" placeholder="Nome completo" required>
-          <div class="invalid-feedback">Nome inválido</div>
-        </div>
-        <div class="col-md-2 col">
-          <label for="inputTelefone">Telefone</label>
-          <input [(ngModel)]="telefoneInput" type="text" class="form-control" formControlName="telefone" id="inputTelefone" name="telefone" placeholder="18987654321" required>
-          <div class="invalid-feedback">Telefone inválido</div>
-        </div>
+  <form class="needs-validation" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label fw-semibold">Nome Completo</label>
+        <input type="text" class="form-control py-2" formControlName="nome" placeholder="Seu nome completo">
+        <div class="text-danger small" *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">Nome é obrigatório</div>
       </div>
-      <div class="form-row row">
-        <div class="col-md-4 col">
-          <label for="inputEmail">Email</label>
-          <input [(ngModel)]="emailInput" type="email" class="form-control" formControlName="username" id="inputEmail" name="email" placeholder="name@example.com" required>
-          <div class="invalid-feedback">Email inválido</div>
-        </div>
-        <div class="col-md-4 col">
-          <label for="inputPassword">Senha</label>
-          <input [(ngModel)]="passwordInput" type="password" class="form-control" formControlName="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="inputPassword" name="password" placeholder="********" aria-describedby="passwordHelpBlock" required>
-          <div class="invalid-feedback">Senha inválida</div>
-          <div id="passwordHelpBlock" class="form-text">
-            A senha deve conter 8-20 caracteres, letras e números, não conter espaços, caracteres especiais ou emoji.
-          </div>
-        </div>
-        <div class="col-md-4 col mt-4">
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="roleRadio" class="form-check-input" formControlName="role" type="radio" name="role" id="inlineRadioPaciente" value="paciente" (change)="onChange()" required>
-            <label class="form-check-label" for="inlineRadioPaciente">Paciente</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input [(ngModel)]="roleRadio" class="form-check-input" formControlName="role" type="radio" name="role" id="inlineRadioPsicologo" value="psicologo" (change)="onChange()" required>
-            <label class="form-check-label" for="inlineRadioPsicologo">Psicólogo</label>
-          </div>
-          @if(isCheckedPsicologo) {
-            <div class="col-md-4 col">
-              <label for="inputCRP">CRP</label>
-              <input [(ngModel)]="crpInput" type="text" pattern="[0-9]{7}" class="form-control" formControlName="crp" id="inputCRP" name="crp" required>
-              <div class="invalid-feedback">CRP inválido</div>
-            </div>
-          }
-          <div class="invalid-feedback">
-            Você deve selecionar paciente/psicólogo.
-          </div>
-        </div>
+      
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Telefone</label>
+        <input type="text" class="form-control py-2" formControlName="telefone" placeholder="(18) 99999-9999">
       </div>
-    
-      <div class="form-row row">
-        <div class="col-md-4 col">
-          <label for="inputAddress">Endereço</label>
-          <input [(ngModel)]="enderecoInput" type="text" class="form-control" formControlName="endereco" id="inputAddress" name="endereco" placeholder="123 Main St" required>
-          <div class="invalid-feedback">Endereço inválido</div>
+    </div>
+
+    <div class="row g-3 mt-2">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">E-mail (Username)</label>
+        <input type="email" class="form-control py-2" formControlName="username" placeholder="nome@exemplo.com">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Senha</label>
+        <input type="password" class="form-control py-2" formControlName="password" placeholder="********">
+        <div class="form-text">Mínimo 8 caracteres, letras e números.</div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-2 align-items-end">
+      <div class="col-md-6">
+        <label class="form-label d-block fw-semibold">Tipo de Perfil</label>
+        <div class="form-check form-check-inline mt-2">
+          <input class="form-check-input" type="radio" formControlName="role" id="paciente" value="paciente">
+          <label class="form-check-label" for="paciente">Paciente</label>
         </div>
-        <div class="col-md-2 col">
-            <label for="inputCity">Cidade</label>
-            <input [(ngModel)]="cidadeInput" type="text" class="form-control" formControlName="cidade" id="inputCity" name="cidade" required>
-            <div class="invalid-feedback">Cidade inválida</div>
-        </div>
-        <div class="col-md-2 col">
-            <label for="inputState">Estado</label>
-            <select [(ngModel)]="estadoSelect" formControlName="estado" id="inputState" name="estado" class="form-control" required>
-                @for(estado of estadosItems; track estado) {
-                    @if(estado == 'SP') {
-                        <option selected>{{ estado }}</option>
-                    } @else {
-                        <option>{{ estado }}</option>
-                    }
-                }
-            </select>
-            <div class="invalid-feedback">Estado inválido</div>
-        </div>
-        <div class="col-md-2 col">
-            <label for="inputZip">CEP</label>
-            <input [(ngModel)]="CEPInput" type="text" pattern="[0-9]{8}" class="form-control" formControlName="cep" id="inputZip" name="cep" required>
-            <div class="invalid-feedback">CEP inválido</div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" formControlName="role" id="psicologo" value="psicologo">
+          <label class="form-check-label" for="psicologo">Psicólogo</label>
         </div>
       </div>
 
-      <div class="form-row row justify-content-md-center mt-4">
-        <div class="col-md-2">
-            @if(userId) {
-                <button type="button" id="btnDelete" class="btn btn-outline-danger" (click)="deleteUser(userId)">Excluir</button>
-            }
-        </div>
-        <div class="col-md-2">
-            <button type="submit" id="btnUpdate" class="btn btn-primary">Atualizar</button>
-        </div>
+      <div class="col-md-6" *ngIf="form.get('role')?.value === 'psicologo'">
+        <label class="form-label fw-semibold">CRP</label>
+        <input type="text" class="form-control py-2" formControlName="crp" placeholder="0000000">
       </div>
-    </form>
+    </div>
+
+    <hr class="my-4 opacity-50">
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Endereço</label>
+        <input type="text" class="form-control py-2" formControlName="endereco" placeholder="Rua, número, bairro">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Cidade</label>
+        <input type="text" class="form-control py-2" formControlName="cidade">
+      </div>
+      <div class="col-md-1">
+        <label class="form-label fw-semibold">UF</label>
+        <select class="form-select py-2" formControlName="estado">
+          <option *ngFor="let estado of estadosItems" [value]="estado">{{ estado }}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fw-semibold">CEP</label>
+        <input type="text" class="form-control py-2" formControlName="cep" placeholder="00000000">
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-5">
+      <button type="button" class="btn btn-outline-danger px-4 py-2 fw-bold" 
+              (click)="onDelete()" *ngIf="userId">
+        Excluir Conta
+      </button>
+      
+      <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow-sm" [disabled]="form.invalid">
+        Salvar Alterações
+      </button>
+    </div>
+  </form>
+</div>

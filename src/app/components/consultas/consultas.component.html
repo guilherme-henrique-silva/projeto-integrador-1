@@ -1,75 +1,128 @@
-<app-top-navbar></app-top-navbar>
+<main class="container py-4 animate-in">
+  
+  @if(alertMessage) {
+    <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-4 mb-4" role="alert">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-check-all fs-4 me-2"></i>
+        <span>{{ alertMessage }}</span>
+      </div>
+      <button type="button" class="btn-close" (click)="alertMessage = null"></button>
+    </div>
+  }
 
-<div class="m-3" id="liveAlertPlaceholder"></div>
-
-<div class="container m-3 p-0">
-    @if(userRole == 'psicologo') {
-        <div class="row justify-content-between">
-            <div class="col-auto"><h5>Suas consultas</h5></div>
-            <div class="col-auto">
-                <button type="button" class="btn btn-primary"  (click)="editConsulta()">Nova consulta</button>
-            </div>
-        </div>
-    } @else {
-        <div class="row justify-content-start">
-            <div class="col-auto"><h5>Suas consultas</h5></div>
-        </div>
+  <header class="d-flex justify-content-between align-items-end mb-5">
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-1">
+          <li class="breadcrumb-item x-small"><a routerLink="/dashboard" class="text-decoration-none text-primary">Home</a></li>
+          <li class="breadcrumb-item x-small active">Consultas</li>
+        </ol>
+      </nav>
+      <h2 class="fw-bold text-dark m-0 display-6">Minha Agenda</h2>
+      <p class="text-muted mb-0">Gestão de sessões e profissionais responsáveis.</p>
+    </div>
+    
+    @if(userRole === 'psicologo') {
+      <button class="btn btn-primary btn-lg shadow-sm rounded-pill px-4 fs-6" (click)="navegarParaForm()">
+        <i class="bi bi-calendar-plus me-2"></i>Nova Consulta
+      </button>
     }
-</div>
-@if(consultasHasData()) {
-    <div class="row m-3">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    @for(column of tableColumns; track column) {
-                        <th scope="col">{{ column }}</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @for(consulta of consultas; track consulta.data) {
-                    <tr>
-                        <td>{{ consulta.data }}</td>
-                        <td>{{ consulta.status }}</td>
-                        <td>{{ consulta.observacoes }}</td>
-                        @if(userRole == 'psicologo') {
-                            <!-- <td>{{ consulta.paciente }}</td>
-                            <td><button type="button" class="btn btn-primary" (click)="editConsulta(consulta.id)">Editar</button></td> -->
-                            <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Excluir
-                                </button>
-                            </td>
-                        }
-                        <!-- @else {
-                            <td>{{ consulta.psicologo }}</td>
-                        } -->
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-} @else {
-    <div class="alert alert-info m-3" role="alert">
-        Não foram encontradas consultas no seu registro.
-    </div>
-}
+  </header>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Excluir consulta</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    @if(consultas.length > 0) {
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">Data e Horário</th>
+              <th>Psicólogo Responsável</th>
+              <th class="text-center">Status</th>
+              <th>Observações</th>
+              <th class="text-end pe-4">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(consulta of consultas; track consulta.id) {
+              <tr>
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <div class="calendar-icon me-3">
+                      <span class="month">{{ consulta.data | date:'MMM' }}</span>
+                      <span class="day">{{ consulta.data | date:'dd' }}</span>
+                    </div>
+                    <div class="d-flex flex-column">
+                      <span class="fw-bold text-dark">{{ consulta.data | date: 'HH:mm' }}h</span>
+                      <small class="text-muted x-small">{{ consulta.data | date: 'EEEE' | titlecase }}</small>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="btn-action bg-primary text-white me-2 d-flex align-items-center justify-content-center shadow-sm">
+                      <i class="bi bi-person-fill fs-6"></i>
+                    </div>
+                    <div class="d-flex flex-column">
+                      <span class="fw-semibold text-dark">{{ consulta.psicologo?.nome || 'Profissional' }}</span>
+                      <span class="text-primary fw-bold" style="font-size: 0.6rem;">CRP ATIVO</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <span class="badge-status" [ngClass]="getStatusClass(consulta.status)">
+                    {{ consulta.status | titlecase }}
+                  </span>
+                </td>
+                <td>
+                  <span class="text-secondary small d-inline-block text-truncate" style="max-width: 180px;">
+                    {{ consulta.observacoes || 'Nenhum comentário' }}
+                  </span>
+                </td>
+                <td class="pe-4 text-end">
+                  <button class="btn-action me-1" title="Visualizar">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  @if(userRole === 'psicologo') {
+                    <button class="btn-action text-danger" 
+                            data-bs-toggle="modal" data-bs-target="#deleteModal"
+                            (click)="prepararExclusao(consulta.id)" title="Cancelar">
+                      <i class="bi bi-x-circle"></i>
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
       </div>
-      <div class="modal-body">
-        Deseja realmente excluir esta consulta?
+    } @else {
+      <div class="text-center py-5 bg-white">
+        <i class="bi bi-calendar-x text-light display-1"></i>
+        <h5 class="text-dark fw-bold mt-3">Nenhuma consulta agendada</h5>
+        <p class="text-muted">Seus horários aparecerão aqui.</p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="showAlert()">Excluir</button>
+    }
+  </div>
+</main>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4 p-3">
+      <div class="modal-body text-center p-4">
+        <div class="btn-action bg-danger-subtle text-danger mx-auto mb-4" style="width: 60px; height: 60px; font-size: 1.5rem; cursor: default;">
+          <i class="bi bi-calendar-x"></i>
+        </div>
+        <h4 class="fw-bold text-dark">Cancelar Sessão?</h4>
+        <p class="text-muted small">Esta ação removerá o agendamento da sua grade horária permanentemente.</p>
+        
+        <div class="d-grid gap-2 mt-4">
+          <button type="button" class="btn btn-danger btn-lg rounded-pill fw-bold fs-6" data-bs-dismiss="modal" (click)="confirmarExclusao()">
+            Confirmar Cancelamento
+          </button>
+          <button type="button" class="btn btn-light btn-lg rounded-pill fw-bold fs-6" data-bs-dismiss="modal">
+            Manter na Agenda
+          </button>
+        </div>
       </div>
     </div>
   </div>

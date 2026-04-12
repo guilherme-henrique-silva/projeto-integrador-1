@@ -1,4 +1,25 @@
-<app-top-navbar></app-top-navbar>
-<div class="container m-3 p-0">
-    <app-avaliacao-form></app-avaliacao-form>
-</div>
+<main class="container py-5 animate-in">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      
+      <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark mb-2">Registro de Bem-estar</h2>
+        <p class="text-muted">Como você se sente neste momento? Sua resposta ajuda no acompanhamento terapêutico.</p>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-4">
+          <app-avaliacao-form></app-avaliacao-form>
+        </div>
+      </div>
+
+      <div class="mt-4 p-3 bg-light rounded-3 border-start border-primary border-4 shadow-sm">
+        <small class="text-muted">
+          <i class="bi bi-info-circle me-2"></i>
+          Suas avaliações são privadas e compartilhadas apenas com seu profissional de saúde.
+        </small>
+      </div>
+      
+    </div>
+  </div>
+</main>

@@ -1,33 +1,59 @@
-<nav class="navbar navbar-expand-lg bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand text-white" href="/home">Mentalize</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                @for(item of navItems; track item.label) {
-                    <li (click)="navigateTo(item.route)">
-                        <a class="nav-link text-white active" aria-current="page">{{ item.label }}</a>
-                    </li>
-                }
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Olá, {{getUserNome()}}!
-                    </a>
-                    <ul class="dropdown-menu">
-                        @for(item of dropdownItems; track item.label) {
-                            <li (click)="navigateTo(item.route)">
-                                <a class="dropdown-item">{{ item.label }}</a>
-                            </li>
-                        }
-                        <li><hr class="dropdown-divider"></li>
-                        <li (click)="logout()">
-                            <a class="dropdown-item">Sair</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary-gradient fixed-top shadow-sm">
+  <div class="container-fluid px-lg-5">
+    <a class="navbar-brand d-flex align-items-center fw-bolder fs-3" (click)="navigateTo('/home')">
+      Mentalize<span class="brand-dot">.</span>
+    </a>
+
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-1">
+        @for(item of filteredNavItems; track item.label) {
+          <li class="nav-item">
+            <a class="nav-link custom-link" 
+               (click)="navigateTo(item.route)" 
+               routerLinkActive="active-link">
+               {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <div class="d-flex align-items-center ms-auto">
+        <div class="dropdown">
+          <button class="profile-trigger d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="user-meta d-none d-sm-block text-end me-3">
+              <span class="user-greeting d-block text-white opacity-75 small">Olá,</span>
+              <span class="user-name d-block text-white fw-bold">{{getUserNome()}}</span>
+            </div>
+            <div class="avatar-box">
+              {{ getUserNome().charAt(0).toUpperCase() }}
+            </div>
+          </button>
+          
+          <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 animate slideIn">
+            <div class="dropdown-header text-uppercase small fw-bold text-muted">Gerenciar Conta</div>
+            <li>
+              <a class="dropdown-item py-2 d-flex align-items-center gap-2" (click)="navigateTo('/perfil')">
+                Ver Perfil
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item py-2 d-flex align-items-center gap-2" (click)="navigateTo('/configuracoes')">
+                Configurações
+              </a>
+            </li>
+            <li><hr class="dropdown-divider opacity-50"></li>
+            <li>
+              <a class="dropdown-item logout-link py-2 d-flex align-items-center gap-2" (click)="logout()">
+                Sair
+              </a>
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
+  </div>
 </nav>
