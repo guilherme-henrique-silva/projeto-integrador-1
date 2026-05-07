@@ -16,41 +16,18 @@ O projeto está configurado para funcionar juntamente com o projeto [backend em 
 ## 🏗️ Arquitetura do Projeto
 
 ```mermaid
-graph TB
+graph LR
     User["👤 Usuário"]
-    Browser["🌐 Navegador"]
     
     subgraph Frontend["Frontend - Angular SPA"]
         Router["Router<br/>app.routes.ts"]
-        Auth["🔐 Auth Guard<br/>auth.guard.ts"]
+        Auth["🔐 Auth Guard"]
         
-        subgraph Components["Componentes"]
-            Login["Login Component"]
-            Signin["SignIn Component"]
-            Home["Home Component"]
-            Consultas["Consultas Component"]
-            ConsultaForm["Consulta Form"]
-            ConsultaDetalhe["Consulta Detalhe"]
-            Avaliacoes["Avaliações Component"]
-            AvaliacaoForm["Avaliação Form"]
-            AvaliacaoDetalhe["Avaliação Detalhe"]
-            Perfil["Perfil Component"]
-            PerfilForm["Perfil Form"]
-            Progresso["Progresso Component"]
-            TopNav["Top NavBar"]
-            Footer["Footer"]
-        end
+        Components["📱 Componentes<br/>Login, Home, Consultas<br/>Avaliações, Perfil, Progresso"]
         
-        subgraph Services["Serviços"]
-            AuthService["AuthService<br/>Gerencia auth"]
-            LoginService["LoginService"]
-            RegisterService["RegisterService"]
-            ConsultaService["ConsultaService<br/>Gerencia consultas"]
-            AvaliacaoService["AvaliacaoService<br/>Gerencia avaliações"]
-            UserService["UserService<br/>Dados do usuário"]
-        end
+        Services["⚙️ Serviços<br/>AuthService, ConsultaService<br/>AvaliacaoService, UserService"]
         
-        Interceptor["⚙️ Auth Interceptor<br/>auth.interceptor.ts<br/>Injeta token JWT"]
+        Interceptor["🔑 Interceptor JWT"]
     end
     
     subgraph Backend["Backend - API REST"]
@@ -58,17 +35,17 @@ graph TB
         DB["🗄️ Database<br/>Sequelize"]
     end
     
-    User -->|Interage| Browser
-    Browser -->|Renderiza| Frontend
-    Router -->|Controla rotas| Components
-    Auth -->|Verifica acesso| Router
+    User -->|Navega| Router
+    Router -->|Valida| Auth
+    Auth -->|Renderiza| Components
     Components -->|Consome| Services
-    Services -->|HTTP Requests| Interceptor
-    Interceptor -->|Adiciona token| API
+    Services -->|HTTP + Token| Interceptor
+    Interceptor -->|Requisição| API
     API -->|Consulta/Persiste| DB
+    DB -->|Dados| API
     API -->|Response JSON| Interceptor
-    Interceptor -->|Retorna dados| Services
-    Services -->|Atualiza state| Components
+    Interceptor -->|Retorna| Services
+    Services -->|Atualiza| Components
 ```
 
 ## 📁 Estrutura de Pastas
