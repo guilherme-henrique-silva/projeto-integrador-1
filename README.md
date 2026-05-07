@@ -13,6 +13,64 @@ O projeto está configurado para funcionar juntamente com o projeto [backend em 
 - [Angular Router](https://angular.io/guide/router)
 - [HttpClient](https://angular.io/guide/http)
 
+## 🏗️ Arquitetura do Projeto
+
+```mermaid
+graph TB
+    User["👤 Usuário"]
+    Browser["🌐 Navegador"]
+    
+    subgraph Frontend["Frontend - Angular SPA"]
+        Router["Router<br/>app.routes.ts"]
+        Auth["🔐 Auth Guard<br/>auth.guard.ts"]
+        
+        subgraph Components["Componentes"]
+            Login["Login Component"]
+            Signin["SignIn Component"]
+            Home["Home Component"]
+            Consultas["Consultas Component"]
+            ConsultaForm["Consulta Form"]
+            ConsultaDetalhe["Consulta Detalhe"]
+            Avaliacoes["Avaliações Component"]
+            AvaliacaoForm["Avaliação Form"]
+            AvaliacaoDetalhe["Avaliação Detalhe"]
+            Perfil["Perfil Component"]
+            PerfilForm["Perfil Form"]
+            Progresso["Progresso Component"]
+            TopNav["Top NavBar"]
+            Footer["Footer"]
+        end
+        
+        subgraph Services["Serviços"]
+            AuthService["AuthService<br/>Gerencia auth"]
+            LoginService["LoginService"]
+            RegisterService["RegisterService"]
+            ConsultaService["ConsultaService<br/>Gerencia consultas"]
+            AvaliacaoService["AvaliacaoService<br/>Gerencia avaliações"]
+            UserService["UserService<br/>Dados do usuário"]
+        end
+        
+        Interceptor["⚙️ Auth Interceptor<br/>auth.interceptor.ts<br/>Injeta token JWT"]
+    end
+    
+    subgraph Backend["Backend - API REST"]
+        API["🔗 Express API<br/>Endpoints REST"]
+        DB["🗄️ Database<br/>Sequelize"]
+    end
+    
+    User -->|Interage| Browser
+    Browser -->|Renderiza| Frontend
+    Router -->|Controla rotas| Components
+    Auth -->|Verifica acesso| Router
+    Components -->|Consome| Services
+    Services -->|HTTP Requests| Interceptor
+    Interceptor -->|Adiciona token| API
+    API -->|Consulta/Persiste| DB
+    API -->|Response JSON| Interceptor
+    Interceptor -->|Retorna dados| Services
+    Services -->|Atualiza state| Components
+```
+
 ## 📁 Estrutura de Pastas
 
     src/
