@@ -48,10 +48,20 @@ npm install
 
 ## ▶️ Executando o Projeto
 
-Modo de desenvolvimento:
+1. Modo de desenvolvimento local:
 
 ```bash
 ng serve
+```
+
+2. Docker:
+
+```bash
+# Build da imagem
+docker build -t projeto-integrador-1 .
+
+# Rodar o container na porta 4200
+docker run -p 4200:80 projeto-integrador-1
 ```
 
 Acesse no navegador: http://localhost:4200
@@ -91,10 +101,20 @@ Este projeto vem preparado com:
 
     Protractor (ou Cypress, se configurado) para testes e2e
 
-Execute com:
+Execute os testes unitários com:
 
 ```bash
+# Executando diretamente os testes
 ng test
+
+# OU usando ChromeHeadless
+ng test --browsers ChromeHeadless --watch=false
+```
+
+Execute os testes end-to-end (e2e) com:
+
+```bash
+ng e2e
 ```
 
 ## 📄 Licença

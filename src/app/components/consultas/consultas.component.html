@@ -86,7 +86,7 @@
           
 
               @if(userRole === 'psicologo') {
-              @if(consulta.status?.toLowerCase() === 'agendada') {
+              @if(consulta.status.toLowerCase() === 'agendada') {
               <button class="btn-action text-success me-1" title="Finalizar Sessão"
                 (click)="atualizarStatus(consulta.id, 'concluida')">
                 <i class="bi bi-check-circle"></i>

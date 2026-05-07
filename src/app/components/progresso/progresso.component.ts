@@ -4,12 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { ChartType, GoogleChartsModule } from 'angular-google-charts';
 import { AvaliacaoService } from '../../services/avaliacao.service';
 import { AuthService } from '../../auth/auth.service';
-import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
-
 @Component({
   selector: 'app-progresso',
   standalone: true,
-  imports: [CommonModule, GoogleChartsModule, TopNavbarComponent, FormsModule],
+  imports: [CommonModule, GoogleChartsModule, FormsModule],
   templateUrl: './progresso.component.html',
   styleUrl: './progresso.component.css'
 })

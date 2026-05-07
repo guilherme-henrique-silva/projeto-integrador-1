@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { TopNavbarComponent } from './top-navbar.component';
 
@@ -8,7 +9,7 @@ describe('TopNavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopNavbarComponent]
+      imports: [TopNavbarComponent, HttpClientTestingModule]
     })
     .compileComponents();
 

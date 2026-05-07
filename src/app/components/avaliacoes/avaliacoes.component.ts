@@ -4,12 +4,10 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Importante para o search
 import { AuthService } from '../../auth/auth.service';
 import { AvaliacaoService, Avaliacao } from '../../services/avaliacao.service';
-import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
-
 @Component({
   selector: 'app-avaliacoes',
   standalone: true,
-  imports: [CommonModule, RouterModule, TopNavbarComponent, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './avaliacoes.component.html',
   styleUrl: './avaliacoes.component.css'
 })
